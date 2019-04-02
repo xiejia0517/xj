@@ -1,0 +1,282 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-touch-fullscreen" content="yes" />
+<meta name="format-detection" content="telephone=no"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="msapplication-tap-highlight" content="no" />
+<!--<meta name="viewport" content="initial-scale=1,maximum-scale=1,minimum-scale=1" />-->
+<title></title>
+
+    <link rel="stylesheet" href="/zdd/mui/css/mui.min.css">
+	<link rel="stylesheet" href="/zdd/ui/weui/v1.1.3/weui.min.css">
+	<!--<link rel="stylesheet" href="/zdd/ui/jquery-weui/v1.2.1/jquery-weui.min.css">-->
+	<link rel="stylesheet" href="/zdd/iconfont/iconfont.css?v=1.1">
+	<link rel="stylesheet" href="/zdd/images/zdd.css">
+	<link rel="stylesheet" href="/zdd/images/zdd_group.css">
+	<link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css">
+	<script type="text/javascript" src="/zdd/ui/jquery/jquery-1.12.4.min.js"></script>
+	<!--<script type="text/javascript" src="/zdd/ui/jquery-weui/v1.2.1/jquery-weui.min.js"></script>-->
+	<script type="text/javascript" src="/zdd/mui/js/mui.min.js"></script>
+	<!--<script type="text/javascript" src="/zdd/ui/vue/v2.5.17/vue.min.js"></script>-->
+	<script type="text/javascript" src="/zdd/js/common.js?v=1.1"></script>
+    <link rel="stylesheet" href="/static/plugins/js/jquery-ui/jquery-ui.min.css">
+    <script src="/static/plugins/js/jquery-ui/jquery-ui.min.js"></script>
+    <script src="/static/plugins/layer/layer.js"></script>
+    <script type="text/javascript" charset="utf-8">
+        mui.init();
+    </script>
+	<style>
+		.group_li{
+			width:50%;
+			float:left;
+			text-align: center;
+		}
+		.group_ul{
+			margin-top:5px;
+		}
+	</style>
+</head>
+
+<body>
+	<header class="mui-bar mui-bar-nav">
+		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		<h1 class="mui-title">设备管理</h1>
+		<a class="mui-icon mui-icon-bars mui-pull-right"></a>
+	</header>
+	<div style="height: 50px;background: #fafafa;"></div>
+	<div >
+		<div class="device_tab">
+			<a href="{:url('Template/device_list')}" class="item" :class="Tab.active==0?'active':''" v-on:click="set_active(0)">设备列表</a>
+			<a href="javascript:void(0);" class="item" :class="Tab.active==1?'active':''" v-on:click="set_active(1)">网关管理</a>
+			<a href="javascript:void(0);" class="item" :class="Tab.active==2?'active':''" v-on:click="set_active(2)">任务列表</a>
+			<a href="{:url('Template/group_list')}" class="item active"  >分组管理</a>
+		</div>
+        <div id="groupAdds"></div>
+			<!--分组管理-->
+			<div class="">
+				<buttom id="create_group" type="buttom" class="mui-btn mui-btn-primary mui-icon mui-icon-plus ">创建分组</buttom>
+                <ul class="mui-table-view">
+                    {foreach name="group_list" item="v" key="k" }
+                    <li class=" mui-media" style="border:none;padding:10px 0;">
+
+							<ul class="mui-table-view">
+								{if condition="$v.teamname eq 'Smt-Group' "}
+
+								<li class="mui-table-view-cell mui-collapse mui-active">
+									<a class="mui-navigate-right mui-active" href="#">
+										<span class="group_teamname" style="font-weight: bold;">{$v.teamname}</span>
+									</a>
+
+									<div class="mui-collapse-content mui-table-view-cell mui-collapse">
+
+
+										{foreach name="$devices_list" item="o" key="s" }
+										{if condition="($o.group_name eq 'Smt-Group') OR ($o.group_name eq '') "}
+										<a href="{:url('Template/device_group_detail',['f_id'=>$o.bid])}">
+											<img class="mui-media-object mui-pull-left" src="/zdd/images/photo/device_default.png">
+											<div class="mui-media-body">
+												{$o.model_name} 所属分组:
+												{if condition="$o.group_name eq ''"}
+													<span style="color:#8f8f94">(暂无分组)</span>
+												{else/}
+													<span style="color:blue">({$o.group_name})</span>
+												{/if}
+												<p>此设备在此分组中的顺序: {$o.f_sort}</p>
+												<p class='mui-ellipsis'>网关ID：{$o.gateway_id} 设备ID：{$o.sub_id} </p>
+											</div>
+										</a>
+										{/if}
+										{/foreach}
+
+									</div>
+
+								</li>
+
+								{elseif condition="$v.teamname neq 'Smt-Group'"/}
+								<li class="mui-table-view-cell mui-collapse">
+									<a class="mui-navigate-right" href="#">
+										<span class="group_teamname" style="font-weight: bold;">{$v.teamname}</span>
+										<span class="mui-badge">{$v.num}</span>
+									</a>
+
+									<div class="mui-collapse-content mui-table-view-cell mui-collapse">
+
+										<ul class="mui-table-view group_ul">
+											<li class="group_li"><button title="{$v.teamname}" id="group_rename" type="button" class="mui-btn mui-btn-primary group_rename">分组重命名</button></li>
+											<li class="group_li"><button title="{$v.teamname}" id="group_delete" type="button" class="mui-btn mui-btn-danger group_delete">删除分组</button></li>
+										</ul>
+
+										{foreach name="$devices_list" item="o" key="s" }
+										{if condition="($o.group_name neq 'Smt-Group') and ($o.group_name eq $v.teamname) "}
+										<a href="{:url('Template/device_group_detail',['f_id'=>$o.bid])}">
+											<img class="mui-media-object mui-pull-left" src="/zdd/images/photo/device_default.png">
+											<div class="mui-media-body">
+												{$o.model_name} 所属分组:{$o.group_name}
+												<p>此设备在此分组中的顺序: {$o.f_sort}</p>
+												<p class='mui-ellipsis'>网关ID：{$o.gateway_id} 设备ID：{$o.sub_id} </p>
+											</div>
+										</a>
+										{/if}
+										{/foreach}
+
+									</div>
+
+								</li>
+								{/if}
+							</ul>
+
+                    </li>
+                    {/foreach}
+                </ul>
+			</div>
+
+			<div id="groupAdd" class="mui-popover-arrow" style="display: none" >
+				<form class="mui-input-group">
+					<div class="mui-input-row">
+						<label>{$Think.lang.group_name}</label>
+						<input type="text" id="group_name" class="mui-input-clear" name="group_name" placeholder="{$Think.lang.save_group_name}">
+					</div>
+					<div class="mui-button-row">
+						<button type="button" id="but_add_group" class="mui-btn mui-btn-primary" >{$Think.lang.save_group}</button>
+					</div>
+				</form>
+			</div>
+
+
+
+		<div id="group_rename_show" class="mui-popover-arrow" style="display: none" >
+			<form class="mui-input-group">
+				<div class="mui-input-row">
+					<label>分组现在名</label>
+					<input type="text" class="oldname" id="oldname" name="old_name" disabled value="">
+				</div>
+				<div class="mui-input-row">
+					<label>{$Think.lang.group_rename}</label>
+					<input type="text" id="group_rname_save" class="mui-input-clear" name="group_rname_save" placeholder="{$Think.lang.save_group_name}">
+				</div>
+
+				<div class="mui-button-row">
+					<button type="button" id="group_but_rename" class="mui-btn mui-btn-primary" >{$Think.lang.save_group}</button>
+				</div>
+			</form>
+		</div>
+
+		</div>
+	</div>
+
+<script>
+// var SERVICE_URL = "https://shop.zuoduoduo.cn";
+var SERVICE_URL = "http://www.shop.com";
+$(function(){
+
+   $("#create_group").click(function(){
+       $( "#groupAdd" ).dialog({
+           title: '{$Think.lang.add_group}',
+           width: 400,
+           height: 200,
+           closed: false,
+           cache: false,
+           modal: true
+       });
+   });
+
+   $("#but_add_group").click(function(){
+       var group_name=$('#group_name').val();
+       if(group_name==''){
+           layer.alert("分组名不能为空");
+           return false;
+       }
+       // $( "#groupAdd" ).dialog('close');
+        $(".ui-icon-closethick").click();
+
+
+       $.ajax({
+           type: 'POST',
+           url: "{:url('Template/addGroup')}",
+           cache: false,
+           data: {"group_name":group_name},
+           dataType: 'json',
+           success: function (data) {
+               if (data.code == '1') {
+                   layer.alert(data.message);
+                   location.reload();
+               }
+               else if(data.code=='2') {
+                   layer.alert(data.message);
+               }
+           },
+           error: function () {
+               layer.alert("添加分组失败");
+           },
+       });
+
+   });
+
+	$(".group_rename").click(function(){
+        var group_teamname=$(this).attr('title');
+        var new_groupname=$(".oldname").val(group_teamname);
+
+        $( "#group_rename_show" ).dialog({
+            title: '{$Think.lang.group_rename}',
+            width: 500,
+            height: 400,
+            closed: false,
+            cache: false,
+            modal: true
+        });
+	});
+
+   $("#group_but_rename").click(function(){
+		var group_rname_save=$("#group_rname_save").val();
+		var oldname=$("#oldname").val();
+       $.ajax({
+           type: 'POST',
+           url: "{:url('Template/groupRename')}",
+           cache: false,
+           data: {"group_rname_save":group_rname_save,"oldname":oldname},
+           dataType: 'json',
+           success: function (data) {
+               if (data.code == '1') {
+                   layer.alert(data.message);
+                   location.reload();
+               }
+               else if(data.code=='2') {
+                   layer.alert(data.message);
+               }
+           },
+           error: function () {
+               layer.alert("重命名分组失败");
+           },
+       });
+   });
+
+
+   $(".group_delete").click(function(){
+		var group_teamname=$(this).attr('title');
+
+       layer.confirm("确认要删除吗，删除后不能恢复", { title: "删除确认" }, function (index) {
+           layer.close(index);
+           $.post("{:url('Template/groupDel')}", { group_teamname: group_teamname }, function (data) {
+               layer.alert('删除成功', {
+                       title: "删除操作",
+                       btn: ['确定']
+                   },
+                   function (index, item) {
+                       //layer.close(index);
+                       // alert(index);
+                       location.reload();
+                   });
+           });
+       });
+
+	});
+});
+</script>
+
+</body>
+</html>

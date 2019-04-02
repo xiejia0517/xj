@@ -1,0 +1,262 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-touch-fullscreen" content="yes" />
+	<meta name="format-detection" content="telephone=no"/>
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+	<meta name="format-detection" content="telephone=no" />
+	<meta name="msapplication-tap-highlight" content="no" />
+	<meta name="viewport" content="initial-scale=1,maximum-scale=1,minimum-scale=1" />
+	<title></title>
+	<!-- <link rel="stylesheet" href="/zdd/mui/css/mui.min.css"> -->
+	<!-- <link rel="stylesheet" href="/zdd/iconfont/iconfont.css?v=1.1"> -->
+	<!-- <link rel="stylesheet" href="/zdd/images/zdd.css"> -->
+	<script type="text/javascript" src="/zdd/ui/jquery/jquery-1.12.4.min.js"></script>
+	<script type="text/javascript" src="/zdd/mui/js/mui.min.js"></script>
+	<script type="text/javascript" src="/zdd/ui/vue/v2.5.17/vue.min.js"></script>
+	<script type="text/javascript" src="/zdd/js/common.js?v=1.1"></script>
+	<style>
+	*{
+	margin: 0;
+	padding: 0;
+}
+li{
+	list-style: none;
+}
+.icon{
+	position: absolute;
+	top: 5px;
+	right: 5px;
+	height: 25px;
+	width: 25px;
+	background: #fff;
+}
+.laydate-box{
+	height: 34px;
+	width: 154px;
+	border: none;
+	margin: 100px 0 0 15px;	
+	position: relative;
+}
+#laydateInput{
+	outline: none;
+	display: block;
+	height: 30px;
+	width: 150px;
+	font-size: 16px;
+	line-height: 30px;	
+}
+.select-date{
+	position: absolute;
+	left: 0px;
+	top:35px;
+	width: 266px;
+	height: 301px;
+	border: 1px solid #58abff;
+	display: none;
+}
+.select-date-header{
+	height: 48px;
+	border-bottom: 1px solid #58abff;
+}
+.heade-ul{
+	height: 49px;
+}
+.header-item{
+	height: 28px;
+	float: left;
+	margin-top: 9px;
+}
+.header-item select{
+	height: 28px;
+}
+.header-item-one select{
+	width: 68px;
+	margin-left: 10px;
+	height: 30px;
+	outline: none;
+}
+.header-item-one{
+	height: 30px;
+}
+.header-item-two i{
+	display: block;
+	float: left;
+	height: 28px;
+	width: 28px;
+	line-height: 28px;
+	text-align: center;
+	cursor: pointer;
+}
+.header-item-two i{
+	display: block;
+	float: left;
+	height: 28px;
+	width: 28px;
+	line-height: 28px;
+	text-align: center;
+	cursor: pointer;
+}
+.header-item-two{
+	border: 1px solid #ccc;
+	margin-left: 10px;
+}
+.header-item-two select{
+	float: left;
+	border: none;
+	outline: none;
+}
+.header-item-two i:nth-child(1){
+	border-right: 1px solid #ccc;
+}
+.header-item-two i:nth-child(3){
+	border-left: 1px solid #ccc;
+}
+.header-item-three{
+	margin-left: 30px;
+	width: 73px;
+}
+.header-item-three span{
+	display: block;
+	height: 100%;
+	border: 1px solid #d8d8d8;
+	background: #f9f9f9;
+	line-height: 28px;
+	text-align: center;
+	font-size: 14px;
+	width: 100%;
+	cursor: pointer;
+}
+.header-item-three span:hover{
+	border-color: #388bff;
+}
+.header-item-three span.active{
+	border-color: #388bff;
+}
+.week-list{
+	height: 35px;
+	width: 100%;
+	border-bottom: 1px solid #c8cacc;
+}
+.week-list li{
+	float: left;
+	height: 35px;
+	width: 35px;
+	text-align: center;
+	line-height: 35px;
+	font-size: 15px;
+	margin: 0 1px;
+	/*font-weight: bold;*/
+	
+}
+.week-list li:nth-child(7){
+	color:#e02d2d
+}
+.week-list li:nth-child(1){
+	color:#e02d2d
+}
+.tabel-line{
+	height: 35px;
+	border-bottom: 1px solid #c8cacc;
+}
+.tabel-ul{
+	height: 35px;
+}
+.tabel-li{
+	height: 31px;
+	width: 31px;
+	text-align: center;
+	line-height: 31px;
+	float: left;
+	border: 2px solid #fff;
+	margin: 0 1px;
+}
+.tabel-li.preDays{
+	color: #bfbfbf;
+}
+.tabel-li.nextDay{
+	color: #bfbfbf;
+}
+.tabel-li:hover{
+	border-color: #ffbb00;
+}
+.tabel-li.showClick{
+	border-color: #ffbb00;
+}
+.tabel-li.active{
+	background: #ffbb00;
+	color: #fff !important;	border-color:#ffbb00;
+}
+.tabel-li.weekColor{
+	color:#e02d2d;
+}
+	</style>
+	<script>
+	$(function(){$(window).click(function(){if($(".select-date").css("display")=="block"){$(".select-date").css("display","none")}});$(".data-icon,#laydateInput").on("click",function(e){e.stopPropagation();if($(".select-date").css("display")=="none"){$(".select-date").css("display","block")}else{$(".select-date").css("display","none")}});var yearArr=[];var monthArr=[];for(var i=1990;i<2099;i++){yearArr.push(i+"年");$("#yearList").append('<option value="'+(i+"年")+'">'+i+"年"+"</option>")}for(var j=1;j<13;j++){monthArr.push(j+"月");$("#monthList").append('<option value="'+(j+"月")+'">'+j+"月"+"</option>")}var d=new Date();var currYear=d.getFullYear();var currMonth=(d.getMonth()+1);var currDate=d.getDate();$("#laydateInput").val(currYear+"-"+currMonth+"-"+d.getDate());$("#yearList").val(currYear+"年");$("#monthList").val(currMonth+"月");$(".reback").eq(0).click(function(){var d=new Date();var currYear=d.getFullYear();var currMonth=(d.getMonth()+1);$("#yearList").val(currYear+"年");$("#monthList").val(currMonth+"月");$("#laydateInput").val(currYear+"-"+currMonth+"-"+d.getDate());ergodicDate(currYear,currMonth);getSelectDate(currYear+"-"+currMonth+"-"+d.getDate())});var currN=0;var currK=0;ergodicDate(currYear,currMonth);function ergodicDate(year,month){var preMonth=month-1;var preYear=year;if(preMonth<1){preMonth=12;preYear-1}var preMonthLength=getMonthLength(preYear,preMonth);$(".day-tabel").eq(0).empty();var date1=new Date(year+"/"+month+"/"+1).getDay();function getMonthLength(year,month){function isLeapYear(year){return(year%4==0)&&(year%100!=0||year%400==0)}if(month==4||month==6||month==9||month==11){month=30;return month}else{if(month==2){if(isLeapYear==true){month=29;return month}else{month=28;return month}}else{month=31;return month}}}var dayLength=getMonthLength(year,month);var dayArr=[];for(var m=1;m<dayLength+1;m++){dayArr.push(m)}var flag=false;for(var k=0;k<6;k++){var li1=$('<li class="tabel-line"></li>');var ul2=$('<ul class="tabel-ul"></ul>');for(var n=0;n<7;n++){if(k==0&&n<date1){if(currDate<7&&(preMonthLength-date1+n+1)==currDate){if(n==6){ul2.append('<li class="tabel-li preDays active weekColor">'+(preMonthLength-date1+n+1)+"</li>")}else{ul2.append('<li class="tabel-li preDays active">'+(preMonthLength-date1+n+1)+"</li>")}}else{if(n==6){ul2.append('<li class="tabel-li preDays weekColor">'+(preMonthLength-date1+n+1)+"</li>")}else{ul2.append('<li class="tabel-li preDays">'+(preMonthLength-date1+n+1)+"</li>")}}}else{if(k==0){if(currDate<7&&(dayArr[n-date1])==currDate){if(n==6){ul2.append('<li class="tabel-li active weekColor">'+dayArr[n-date1]+"</li>")}else{ul2.append('<li class="tabel-li active">'+dayArr[n-date1]+"</li>")}}else{if(n==6){ul2.append('<li class="tabel-li weekColor">'+dayArr[n-date1]+"</li>")}else{ul2.append('<li class="tabel-li">'+dayArr[n-date1]+"</li>")}}}else{if((k*7-date1+n+1)>dayArr.length){break}else{if(currDate>=2&&(k*7-date1+n+1)==currDate){if(n==0||n==6){ul2.append('<li class="tabel-li active weekColor">'+(k*7-date1+n+1)+"</li>")}else{ul2.append('<li class="tabel-li active">'+(k*7-date1+n+1)+"</li>")}}else{if(n==0||n==6){ul2.append('<li class="tabel-li weekColor">'+(k*7-date1+n+1)+"</li>")}else{ul2.append('<li class="tabel-li">'+(k*7-date1+n+1)+"</li>")}}if((k*7-date1+n+1)==dayArr.length){flag=true;currN=n;currK=k}}}}}li1.append(ul2);$(".day-tabel").eq(0).append(li1);if(flag==true){for(var q=0;q<6-currN;q++){$(".tabel-line").eq(currK).children().append('<li class="tabel-li nextDay">'+(q+1)+"</li>")}break}}}$("#yearList,#monthList, .reback").on("click",function(e){e.stopPropagation()});$("#yearList,#monthList").on("change",function(e){ergodicDate($("#yearList").val().split("年")[0],$("#monthList").val().split("月")[0]);$("#laydateInput").val($("#yearList").val().split("年")[0]+"-"+$("#monthList").val().split("月")[0]+"-"+currDate);getSelectDate($("#yearList").val().split("年")[0]+"-"+$("#monthList").val().split("月")[0]+"-"+currDate)});$(".day-tabel").on("click",".tabel-li",function(e){e.stopPropagation();$(this).addClass("showClick").siblings().removeClass("showClick").parent().parent().siblings().find(".tabel-li").removeClass("showClick");var parentIndex=$(this).parent().parent().index();var thisIndex=$(this).index();if(parentIndex==0&&$(this).html()>7){var selectDate;if(($("#monthList").val().split("月")[0]-1)>0){selectDate=$("#yearList").val().split("年")[0]+"-"+($("#monthList").val().split("月")[0]-1)+"-"+$(this).html();ergodicDate($("#yearList").val().split("年")[0],($("#monthList").val().split("月")[0]-1));$("#yearList").val($("#yearList").val().split("年")[0]+"年");$("#monthList").val(($("#monthList").val().split("月")[0]-1)+"月")}else{selectDate=($("#yearList").val().split("年")[0]-1)+"-"+12+"-"+$(this).html();ergodicDate(($("#yearList").val().split("年")[0]-1),12);$("#yearList").val(($("#yearList").val().split("年")[0]-1)+"年");$("#monthList").val(12+"月")}}else{if(parentIndex==currK&&$(this).html()<7){if(parseInt($("#monthList").val().split("月")[0])+1>12){selectDate=(parseInt($("#yearList").val().split("年")[0])+1)+"-"+1+"-"+$(this).html();
+	ergodicDate($("#yearList").val().split("年")[0],($("#monthList").val().split("月")[0]-1));$("#yearList").val((parseInt($("#yearList").val().split("年")[0])+1)+"年");$("#monthList").val(1+"月")}else{selectDate=($("#yearList").val().split("年")[0])+"-"+(parseInt($("#monthList").val().split("月")[0])+1)+"-"+$(this).html();ergodicDate(($("#yearList").val().split("年")[0]),(parseInt($("#monthList").val().split("月")[0])+1));$("#yearList").val(($("#yearList").val().split("年")[0])+"年");$("#monthList").val((parseInt($("#monthList").val().split("月")[0])+1)+"月")}}else{selectDate=$("#yearList").val().split("年")[0]+"-"+$("#monthList").val().split("月")[0]+"-"+$(this).html()}}$("#laydateInput").val(selectDate);if($(".select-date").css("display")=="none"){$(".select-date").css("display","block")}else{$(".select-date").css("display","none")}var getDate=$("#yearList").val().split("年")[0]+"-"+$("#monthList").val().split("月")[0]+"-"+$(this).html();getSelectDate(getDate)})});
+	</script>
+</head>
+
+<body>
+	<div>
+		
+        <form action="geterrorcheck" method="POST" style="margin-left:15px">
+				
+            <select name="device_uuid" id="">
+				<option>选择设备</option>
+				<option value="6574e35bc0708476769b132b00701bc2">6574e35bc0708476769b132b00701bc2</option>
+				<option value="2ef9247e1e46b4af489df289e7376efb">2ef9247e1e46b4af489df289e7376efb</option>
+				<option value="9a1d68a8a98765fd8c42814a2466a49d">9a1d68a8a98765fd8c42814a2466a49d</option>
+
+				<option value="b5d99353262fa8d1adf7609227b30c62">b5d99353262fa8d1adf7609227b30c62</option>
+				<option value="41f2af52698653ae49ba6940781310e6">41f2af52698653ae49ba6940781310e6</option>
+				<option value="fb07a7340c837c33795f155ceb656fe7">fb07a7340c837c33795f155ceb656fe7</option>
+				<option value="8b155f128af57cac99e4ae8730e6de7a">8b155f128af57cac99e4ae8730e6de7a</option>
+
+				<option value="c6e66760f6f46c34e1e39bdb06d0b340">c6e66760f6f46c34e1e39bdb06d0b340</option>
+				<option value="3d6c34b623e88e9e8e8cca4e03b72920">3d6c34b623e88e9e8e8cca4e03b72920</option>
+			</select>
+
+			<input type="submit" value="查询">
+			
+				<div class="laydate-box">
+						<input type="text" id="laydateInput" placeholder="xxxx年xx月xx日" />
+						<input type="hidden" id="dates" value="" name="date">
+						<div class="select-date">
+							<div class="select-date-header">
+								<ul class="heade-ul">
+									<li class="header-item header-item-one">
+										<select name="" id="yearList"></select>
+									</li>
+									<li class="header-item header-item-two" onselectstart="return false">
+										<select name="" id="monthList"></select>
+									</li>
+									<li class="header-item header-item-three" onselectstart="return false" >
+										<span class="reback">回到今天</span>
+									</li>
+								</ul>
+							</div>
+							<div class="select-date-body">
+								<ul class="week-list">
+									<li>日</li><li>一</li><li>二</li><li>三</li><li>四</li><li>五</li><li>六</li>
+								</ul>
+								<ul class="day-tabel"></ul>
+							</div>
+						</div>
+					</div>
+        </form>
+        
+	</div>
+	<script>
+		function getSelectDate(result){
+			//这里获取选择的日期
+			$("#dates").val(result);
+			console.log(result);
+		}
+	</script>
+</body>
+</html>
+

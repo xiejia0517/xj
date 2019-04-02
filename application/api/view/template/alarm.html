@@ -1,0 +1,104 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-touch-fullscreen" content="yes" />
+	<meta name="format-detection" content="telephone=no"/>
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+	<meta name="format-detection" content="telephone=no" />
+	<meta name="msapplication-tap-highlight" content="no" />
+	<meta name="viewport" content="initial-scale=1,maximum-scale=1,minimum-scale=1" />
+<title></title>
+<link rel="stylesheet" href="/zdd/mui/css/mui.min.css">
+<link rel="stylesheet" href="/zdd/iconfont/iconfont.css?v=1.1">
+<link rel="stylesheet" href="/zdd/images/zdd.css">
+	<script type="text/javascript" src="/zdd/ui/jquery/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="/zdd/js/common.js?v=1.1"></script>
+<script type="text/javascript" src="/zdd/mui/js/mui.min.js"></script>
+<style type="text/css">
+body{ background: #fff; font-size: 12px;}
+.padding_10{ padding: 10px; }
+
+.row-title{ border-bottom: 1px solid #e6e6e6; }
+.row-title input{ margin-bottom: 0; border: 0; padding-left: 3px; font-size: 13px; height: 40px;}
+.row-title textarea{ margin-bottom: 0; border: 0; padding-left: 3px; font-size: 13px;}
+
+.add-photo{border:2px dashed #ddd; display: inline-block; width: 80px; height: 80px; text-align: center; line-height: 70px; position:absolute; margin-top: -100px;}
+.add-photo .iconfont{ font-size: 50px; color: #ccc;}
+
+.dingwei{height: 40px; padding-top: 15px; display: flex; align-items: center;}
+.dingwei .iconfont{ font-size: 24px; color: #888;}
+.dingwei .title{ font-size: 15px; color: #333; margin-left:6px;}
+
+.row-flex{ display: flex; align-items: center; border-bottom: 1px solid #e6e6e6; height: 50px;}
+.row-flex input{ margin:0; border:0; }
+.row-flex .iconfont{ font-size: 22px; color: #999; }
+.row-flex .title{ color: #666; margin-left: 15px; font-size: 14px;}
+.flex-auto{ flex: auto; }
+
+input::-webkit-input-placeholder, textarea::-webkit-input-placeholder { color: #ccc; }
+
+
+
+</style>
+</head>
+
+<body autorun="{fun:'bottom_tabs_new',current:'alarm'}">
+
+<header class="mui-bar mui-bar-nav">
+	<a class="mui-icon mui-icon-bars mui-pull-left mui-plus-visible"></a>
+	<a id="info" class="mui-icon mui-icon-info-filled mui-pull-right" style="color: #999;"></a>
+	<h1 class="mui-title">警告消息</h1>
+</header>
+
+<div class="mui-content">
+	<div class="mui-card">
+		<div class="mui-card-content">
+			<div class="mui-card-content-inner">系统消息</div>
+		</div>
+	</div>
+	<div class="mui-card">
+		<div class="mui-card-header">设备故障提醒</div>
+		<div class="mui-card-content">
+			<div class="mui-card-content-inner">
+				<p>系统监控平台检测到您的工厂有1台设备数据异常，请检查网络连接状态：</p>
+				<p>1. 设备ID：ZDD-10000002</p>
+			</div>
+		</div>
+		<div class="mui-card-footer">2018-11-20</div>
+	</div>
+	<div class="mui-card">
+		<div class="mui-card-header">当前状态提醒</div>
+		<div class="mui-card-header mui-card-media" style="height:40vw;background-image:url(/resource/weixin/slide/slide-1.jpg)"></div>
+		<div class="mui-card-content">
+			<div class="mui-card-content-inner">
+				<p>2018-11-16</p>
+				<p style="color: #333;">1号线，3机台停机。<br>
+					2号线，6机台速率与其他机器不同步。<br>
+					3号线，2机台网线可能被拔掉。<br>
+					3号线，1机台开始作业。<br>
+					4G网络信号质量差，CSQ：10。<br></p>
+			</div>
+		</div>
+		<div class="mui-card-footer">
+			<a class="mui-card-link">Like</a>
+			<a class="mui-card-link">Read more</a>
+		</div>
+	</div>
+	<div class="mui-card">
+		<div class="mui-card-header">设备故障提醒</div>
+		<div class="mui-card-content">
+			<div class="mui-card-content-inner">
+				<p>系统监控平台检测到您的工厂有2台设备数据异常，请检查网络连接状态：</p>
+				<p>1. 设备ID：ZDD-10000005</p>
+				<p>2. 设备ID：ZDD-10000020</p>
+			</div>
+		</div>
+		<div class="mui-card-footer">2018-11-10</div>
+	</div>
+	<div style="height: 10px;"></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-touch-fullscreen" content="yes" />
+	<meta name="format-detection" content="telephone=no"/>
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+	<meta name="format-detection" content="telephone=no" />
+	<meta name="msapplication-tap-highlight" content="no" />
+	<meta name="viewport" content="initial-scale=1,maximum-scale=1,minimum-scale=1" />
+	<title></title>
+	<link rel="stylesheet" href="/zdd/iconfont/iconfont.css?v=1.1">
+	<link rel="stylesheet" href="/zdd/ui/weui/v1.1.3/weui.min.css">
+    <link rel="stylesheet" href="/zdd/images/zdd.css">
+    <style>
+        .desc_img{
+            width: 90%;
+            height: 350px;
+        }
+        .desc_article{
+            width: 90%;
+            height: 100px;
+            /* background-color:skyblue; */
+        }
+        .baoming{
+            width: 100%;
+            height: 100%;
+            box-shadow:0 10px 10px 5px rgb(164, 167, 167); 
+        }
+        .popover{ margin-left: auto; margin-right: auto;margin-top: 20px;}
+    </style>
+</head>
+
+<body>
+
+<div class="mui-content">
+    <div class="popover desc_img" style="height:400px;overflow:scroll">
+            <!-- <img class="baoming" src="http://47.106.138.159/zcz/public/static{$art.pic}" alt="" srcset=""> -->
+            {if condition = "$bool_end eq 1"}
+            <h2>对不起，报名时间已经截止！</h2>
+            {else}
+            <p>内容 : {$art.content}</p>
+            {/if}
+    </div>
+</div>
+<div class="mui-content">
+        <div class="popover desc_article">
+            <h4 style="margin-bottom:15px">主题: {$art.title}</h4>
+            <h5>报名开始: {$art.start_time}</h5>
+            <h5>报名截止: {$art.end_time}</h5>
+        </div>
+</div>
+
+
+<div class="page msg_warn js_show">
+		<div class="weui-msg__extra-area">
+                {if condition = "$bool_end eq 1"}
+                <p class="weui-btn-area">
+                        <a style="color:snow" href="javascrip:;" class="weui-btn weui-btn_primary">报名已结束</a>
+                    </p>
+                {else}
+                <div class="weui-msg__opr-area">
+                    <p class="weui-btn-area">
+                        <a style="color:snow" href="{:url('testsignin',array('id'=>$art.id))}" class="weui-btn weui-btn_primary">进入报名</a>
+                    </p>
+                </div>
+                {/if}
+                
+			<div class="weui-footer">
+				<p class="weui-footer__links">
+					<a href="javascript:void(0);" class="weui-footer__link">XXXX版权所有</a>
+				</p>
+				<p class="weui-footer__text">Copyright © 2016-2019 icreate.ai</p>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>
+<script type="text/javascript" src="/zdd/ui/jquery/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="/zdd/ui/weui/v1.1.3/weui.min.js"></script>
+<script language="javascript">
+	$(function () {
+
+	});
+</script>

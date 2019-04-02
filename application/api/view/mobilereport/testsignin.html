@@ -1,0 +1,143 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-touch-fullscreen" content="yes" />
+	<meta name="format-detection" content="telephone=no"/>
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+	<meta name="format-detection" content="telephone=no" />
+	<meta name="msapplication-tap-highlight" content="no" />
+	<meta name="viewport" content="initial-scale=1,maximum-scale=1,minimum-scale=1" />
+	<title>***</title>
+	<link rel="stylesheet" href="/zdd/mui/css/mui.min.css">
+    <link rel="stylesheet" href="/zdd/iconfont/iconfont.css?v=1.1">
+    <link rel="stylesheet" href="/zdd/ui/weui/v1.1.3/weui.min.css">
+	<style type="text/css">
+        .desc_img{width: 90%;height: 350px;}
+        .desc_article{width: 90%;border: 1px solid #ddd;padding-left: 15px;background-color:rgb(200, 224, 233);}
+        .baoming{width: 100%;height: 100%;}
+        .popover{ margin-left: auto; margin-right: auto;margin-top: 20px;}
+        .weui-msg {padding-top: 0 !important;text-align: center;}
+
+        /* .form-error {border: 1px solid red !important;} */
+    </style>
+</head>
+
+<body>
+<header class="mui-bar mui-bar-nav">
+	<!-- <a class="mui-icon mui-icon-left-nav mui-pull-left" href="{:url('testsignup')}"></a> -->
+	<!-- <a id="menu" class="mui-action-menu mui-icon mui-icon-bars mui-pull-right" href="#topPopover"></a> -->
+	<h1 class="mui-title">报名信息</h1>
+</header>
+
+<div class="mui-content">
+        <div class="popover desc_article">
+            <h4>主题: {$art.title}</h4>
+            <h6>报名开始: {$art.start_time}</h6>
+            <h6>报名截止: {$art.end_time}</h6>
+        </div>
+</div>
+<div class="mui-content"></div>
+    <form class="mui-input-group" action="{:url('testsignok')}" method="POST">
+                <input id="art_id_hidden" type="hidden" name="art_id" value="{$art.id}">
+
+            <div class="mui-input-row shuruK ">
+                <label class="test_input">手机号</label>
+                <input class="" id="user_phone" type="number" oninput="if(value.length>11)value=value.slice(0,11)"  placeholder="请输入手机号" name="user_phone" required="required">
+            </div>
+
+            
+            <div class="mui-input-row shuruK">
+                <label class="test_input">姓名</label>
+                <input type="text"  placeholder="请输入姓名" name="user_name" required="required">
+            </div>
+
+            <div class="mui-input-row shuruK">
+                <label class="test_input">职务</label>
+                <input type="text"  placeholder="请输入职务" name="user_job" required="required">
+            </div>
+
+            <div class="mui-input-row shuruK">
+                <label class="test_input">单位名称</label>
+                <input type="text"  placeholder="请输入单位名称" name="danwei_name" required="required">
+            </div>
+            
+            <div class="mui-input-row mui-select shuruK">  
+                    <label>性别</label>  
+                    <select name="user_sex">  
+                        <option value="男">男</option>  
+                        <option value="女">女</option>  
+                    </select>  
+                </div> 
+
+            <div id="baomingbtn" class="page msg_warn js_show">
+                <div class="weui-msg">
+                    <div class="weui-msg__extra-area">
+                        <div class="weui-msg__opr-area">
+                            <p class="weui-btn-area">
+                                <button disabled id="submitinfo" type="submit" class="weui-btn weui-btn_primary">提交报名信息</button>
+                                <!-- <a style="color:snow"  id="submitinfo" href="{:url('testsignok',array('id'=>$art.id))}" class="weui-btn weui-btn_primary">提交报名信息</a> -->
+                            </p>
+                        </div>
+                        <div class="weui-footer">
+                            <p class="weui-footer__text">Copyright © 2016-2019 icreate.ai</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </form>
+</div>
+
+</body>
+
+</html>
+<script type="text/javascript" src="/zdd/ui/jquery/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="/zdd/ui/vue/v2.5.17/vue.min.js"></script>
+<script type="text/javascript" src="/zdd/js/common.js?v=1.1"></script>
+<script type="text/javascript" src="/zdd/mui/js/mui.min.js"></script>
+<script type="text/javascript" src="/zdd/ui/weui/v1.1.3/weui.min.js"></script>
+<script type="text/javascript" src="/zdd/ui/vue/v2.5.17/vue.min.js"></script>
+<script type="text/javascript" src="/zdd/ui/layer_mobile/layer.js"></script>
+<script>
+        $(function(){
+            // $("#submitinfo").submit();
+            // $("#submitinfo").click(function () { 
+            //     console.log('ceshi!!!!');
+                
+            // });
+            
+
+
+            $("#user_phone").blur(function () { 
+                var user_phone = $("#user_phone").val();
+                console.log(user_phone);
+                    // if (user_phone == '' || user_phone == undefined || user_phone == null){
+                    // $("#user_phone").addClass('form-error'); //添加css样式
+                    // }else {
+                    //     $("#user_phone").removeClass('form-error'); //取消css样式
+                    // }
+
+                // var data =$("#user_phone").val();
+                var data ={phone:$("#user_phone").val(),art:$("#art_id_hidden").val()};
+                var ajaxa =  $.ajax({
+                    type: "POST",
+                    url: "/api/mobilereport/testajax",
+                    data: data,
+                    dataType: "json",
+                    success: function (res) {
+                        // console.log(res);
+                        if(res["ErrorCode"] == 0)
+                        {
+                            alert('手机号已经完成报名！');
+                        }
+                        else
+                        {
+                            $("#submitinfo").removeAttr("disabled");
+                        }
+                    }
+                });
+            });
+        });
+    </script>

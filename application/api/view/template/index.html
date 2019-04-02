@@ -1,0 +1,114 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-touch-fullscreen" content="yes" />
+	<meta name="format-detection" content="telephone=no"/>
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+	<meta name="format-detection" content="telephone=no" />
+	<meta name="msapplication-tap-highlight" content="no" />
+	<meta name="viewport" content="initial-scale=1,maximum-scale=1,minimum-scale=1" />
+	<title></title>
+	<link rel="stylesheet" href="/zdd/mui/css/mui.min.css">
+	<link rel="stylesheet" href="/zdd/iconfont/iconfont.css?v=1.1">
+	<link rel="stylesheet" href="/zdd/images/zdd.css">
+	<script type="text/javascript" src="/zdd/ui/jquery/jquery-1.12.4.min.js"></script>
+	<script type="text/javascript" src="/zdd/mui/js/mui.min.js"></script>
+	<script type="text/javascript" src="/zdd/ui/vue/v2.5.17/vue.min.js"></script>
+	<script type="text/javascript" src="/zdd/js/common.js?v=1.1"></script>
+	<style type="text/css">
+		* { touch-action: pan-y; }
+		[v-cloak] { display:none !important;}
+		body{ background: #fff; font-size: 12px;}
+
+		.mui-slider-item img{ width: 100%; height: 200px;}
+
+		.mui-content_{ background: #f5f5f5;}
+		.mui-content > .title{ padding: 10px 0 10px 10px;}
+
+		.mui-card{ margin: 20px 0;}
+		.head{ display: flex; height: 45px; align-items: center;}
+		.head .iconfont{ width: 20px; color:#0A8CD2; margin-left: 12px;}
+		.head .title{ color: #666; font-size: 16px; margin-left: 6px;}
+	</style>
+</head>
+
+<body autorun="{fun:'bottom_tabs_new',current:'index'}">
+<div id="slider" class="mui-slider">
+	<div class="mui-slider-group mui-slider-loop">
+		<div class="mui-slider-item mui-slider-item-duplicate">
+			<a href="#">
+				<img src="/resource/weixin/slide/slide-3.jpg">
+			</a>
+		</div>
+		<div class="mui-slider-item">
+			<a href="#">
+				<img src="/resource/weixin/slide/slide-1.jpg">
+			</a>
+		</div>
+		<div class="mui-slider-item">
+			<a href="#">
+				<img src="/resource/weixin/slide/slide-2.jpg">
+			</a>
+		</div>
+		<div class="mui-slider-item">
+			<a href="#">
+				<img src="/resource/weixin/slide/slide-3.jpg">
+			</a>
+		</div>
+		<div class="mui-slider-item mui-slider-item-duplicate">
+			<a href="#">
+				<img src="/resource/weixin/slide/slide-1.jpg">
+			</a>
+		</div>
+	</div>
+	<div class="mui-slider-indicator">
+		<div class="mui-indicator mui-active"></div>
+		<div class="mui-indicator"></div>
+		<div class="mui-indicator"></div>
+		<div class="mui-indicator"></div>
+	</div>
+</div>
+<div class="mui-content">
+	<div class="title">今日要闻</div>
+	<ul class="mui-table-view">
+		<li class="mui-table-view-cell">
+			<a class="mui-navigate-right" href="http://bbs.smthome.net/read-htm-tid-3958.html">表面贴装技术的介绍 SMT基础入门之必读</a>
+		</li>
+		<li class="mui-table-view-cell">
+			<a class="mui-navigate-right" href="http://bbs.smthome.net/read-htm-tid-370269.html">管理者服人以“德”还是以“理”？</a>
+		</li>
+		<li class="mui-table-view-cell">
+			<a class="mui-navigate-right" href="http://bbs.smthome.net/read-htm-tid-364287.html">人品与人才哪个更重要</a>
+		</li>
+	</ul>
+	<div class="title">行业资讯</div>
+	<ul class="mui-table-view">
+		<li class="mui-table-view-cell">
+			<a class="mui-navigate-right" href="https://baijiahao.baidu.com/s?id=1597423692918893912&wfr=spider&for=pc">备受关注的工业物联网究竟能干什么？</a>
+		</li>
+		<li class="mui-table-view-cell">
+			<a class="mui-navigate-right" href="https://iot.ofweek.com/2018-08/ART-132214-8140-30260254.html">这工业物联网发展的几大阶段，你在哪个位置？</a>
+		</li>
+	</ul>
+	<div class="mui-card">
+		<div class="head">
+			<i class="iconfont icon-tongji"></i>
+			<span class="title">标杆工厂</span>
+		</div>
+		<div>
+			<a href="/api/template/mine_old.html"><img src="/zdd/images/photo/img-008.jpg" alt="" width="100%"/></a>
+			<div>
+
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript" charset="utf-8">
+	mui.init({});
+</script>
+</body>
+</html>
+

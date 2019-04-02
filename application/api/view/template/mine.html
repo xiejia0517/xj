@@ -1,0 +1,662 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-touch-fullscreen" content="yes" />
+<meta name="format-detection" content="telephone=no"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="msapplication-tap-highlight" content="no" />
+<meta name="viewport" content="initial-scale=1,maximum-scale=1,minimum-scale=1" />
+<title></title>
+	<link rel="stylesheet" href="/zdd/mui/css/mui.min.css">
+	<link rel="stylesheet" href="/zdd/mui/css/mui.picker.min.css">
+	<link rel="stylesheet" href="/zdd/iconfont/iconfont.css?v=1.1">
+	<link rel="stylesheet" href="/zdd/images/zdd.css">
+	<script type="text/javascript" src="/zdd/ui/jquery/jquery-1.12.4.min.js"></script>
+	<script type="text/javascript" src="/zdd/ui/layui/v2.4.5/layui.js"></script>
+	<script type="text/javascript" src="/zdd/ui/layer_mobile/layer.js"></script>
+	<script type="text/javascript" src="/zdd/ui/vue/v2.5.17/vue.min.js"></script>
+	<script type="text/javascript" src="/zdd/mui/js/mui.min.js"></script>
+	<script type="text/javascript" src="/zdd/mui/js/mui.picker.min.js"></script>
+	<script type="text/javascript" src="/zdd/js/common.js?v=1.1"></script>
+	<script type="text/javascript" src="/zdd/ui/echarts/echarts.common.min.js"></script>
+<style type="text/css">
+	* { touch-action: pan-y; }
+	[v-cloak] { display:none !important;}
+	body{ background: #fff; font-size: 12px;}
+	.padding_10{ padding: 10px; }
+	.margin10{ margin: 10px;}
+
+	.device_pick{
+		height:40px;
+		border:1px solid #999;
+		border-radius: 8px;
+		padding: 10px;
+		background: #fff;
+		display: flex;
+		align-items: center;
+	}
+	.device_pick .text {
+		display: inline-block;
+		flex: auto;
+		text-align: center;
+		color: #666;
+		font-size: 0.9rem;
+	}
+	.device_pick .iconfont {
+		display: inline-block;
+		font-size: 1.2rem;
+		color: #888;
+	}
+
+	.box-1000{height: 150px; background: #35b6dd; text-align: center;}
+	.box-1000 .setting{ float: right; margin: 12px 16px 0 0; color: #fff; font-size: 22px;}
+	.box-1000 .logo{ padding-top: 25px; text-align: center; clear: both;}
+	.box-1000 .logo img{ width: 80px; height: 80px; margin: 0 auto;}
+	.box-1000 .name{ padding:2px 0 0 0; color: #fff; font-size: 20px;}
+
+	.box-1001{ display: flex; border-bottom: 1px solid #ddd; align-items:center;}
+	.box-1001 .title{ font-size: 12px; color: #999; padding: 8px; flex: auto;}
+	.box-1001 .iconfont{ font-size: 18px; color: #ccc; margin-right: 10px;}
+
+	.box-1003{ height: 35px; border-bottom: 1px solid #848484; background: #f9f9f9;}
+	.box-1003 a{ display: block; height: 35px; border:1px solid #848484; margin-right: -1px; position: relative; float: left; background: #ebebeb; color: #9b9b9b; font-size: 15px; padding: 0 15px 0 15px; line-height: 32px; border-radius: 5px 5px 0 0;}
+	.box-1003 a.current{ background: #fff; border-bottom: 1px solid #e7e7e7; }
+
+	.box-1004{ border: 1px solid #848484; border-top:0; height: 200px; overflow: hidden;}
+
+	.box-1007{ display: flex; flex-direction:column; padding: 8px;}
+	.box-1007 .row{ display: flex; padding-top: 10px;}
+	.box-1007 .row .date{ color: #ccc; padding: 0 0 0 5px; font-size: 14px;}
+	.box-1007 .row .item{ display: flex; flex: auto; align-items: flex-end;}
+	.box-1007 .row .item .number{ font-size: 36px; color: #333; line-height: 1;}
+	.box-1007 .row .item .unit{ display: flex; flex-direction:column; color: #ccc; font-size: 10px; line-height: 1.2; padding-left: 5px; padding-bottom: 5px;}
+
+	.box-1008{ display: flex; flex-direction:column; border: 1px solid #ddd; margin: 10px; border-radius: 3px;}
+	.box-1008 .item{ border-top: 1px solid #eee; padding: 5px;}
+	.box-1008 .line{ background: #e5faff; font-size: 14px; color: #0000cc; }
+	.box-1008 .item:first-child{  border-top: 0;}
+	.box-1008 .item > span{ display: inline-block; margin-right: 8px; color: #ccc; vertical-align: middle;}
+	.box-1008 .item > span.name{ color: #666; display: block;}
+	.box-1008 .item > span .color{ color: #6699cc; font-size: 16px;}
+
+	.box-1011{ background: #fff; display: flex; flex-direction: column; margin: 10px; border: 1px solid #eee; border-radius: 5px;}
+	.box-1011 .row{ display: flex; flex-direction: column; border-bottom: 1px solid #eee;}
+	.box-1011 .row:last-child{ border-bottom: 0;}
+	.box-1011 .row .title{ padding: 10px 0 0 7px; color: #111;}
+	.box-1011 .row .total{ display: flex;}
+	.box-1011 .row .total > div{ padding: 3px; align-items: center; display: flex; flex: 1;}
+	.box-1011 .row .total > div:first-child{ border-left: 0;}
+	.box-1011 .iconfont{ color: #118eea; font-size: 34px; line-height: 1; padding-left: 0;}
+	.box-1011 .num{ color: #111; font-size: 13px; padding-left: 3px;}
+	.box-1011 .per{ color: #ccc; font-size: 12px; padding-left: 5px;}
+
+	.box-1012{ margin: 20px 10px 10px 10px; background: #fff; border: 1px solid #ddd; border-radius: 3px;}
+	.box-1012 > .title{ position: absolute; background: #fff; margin: -10px 0 0 10px; padding: 0 8px 0 8px;}
+	.box-1012 .stmline{ border-bottom: 1px solid #eee; }
+	.box-1012 .stmline:last-child{ border-bottom: 0; }
+	.box-1012 .stmline .lineinfo{ height: 50px; display: flex; align-items: center;}
+	.box-1012 .stmline .lineinfo > span{ padding-left: 5px;}
+	.box-1012 .stmline .lineinfo > span.name{ font-size: 14px; flex: 1;}
+	.box-1012 .stmline .lineinfo > span.avg{ color:#ccc; flex: 1; }
+	.box-1012 .stmline .lineinfo > span.devicenum{ color:#ccc; width: 60px; text-align: right;}
+	.box-1012 .stmline .lineinfo > span.devicenum b{ color:red; font-weight: normal; font-size: 14px; }
+	.box-1012 .stmline .lineinfo > .icon1{ width: 28px; font-size: 18px; color:#ccc; text-align: center;}
+	.box-1012 .stmline .lineinfo > .icon2{ width: 30px; font-size: 18px; color:#ccc; text-align: center;}
+	.box-1012 .stmline .device_list{ display: flex; flex-wrap:wrap;}
+	.box-1012 .stmline .device_list .item{ width: 25%; display: flex; flex-direction: column; text-align: center; }
+	.box-1012 .stmline .device_list .item img{ width: 50px; height: 50px; }
+	.box-1012 .stmline .device_list .item .title{ padding-bottom: 5px; }
+
+</style>
+</head>
+
+<body autorun="{fun:'bottom_tabs',current:'mine'}">
+<div id="PAGE_MAIN">
+	<div class="box-1000">
+		<div class="" style="width: 100%; height: 30px; position: absolute;">
+			<a href="javascript:;" class="setting iconfont icon-ts-shezhi"></a>
+		</div>
+		<div class="logo"><img src="/zdd/images/logo.png"></div>
+		<div class="name">演示工厂0</div>
+	</div>
+
+	<div class="box-1001">
+		<div class="title">今日SMT产能</div>
+		<div class="iconfont icon-riqi" onclick="PAGE.picktime(PAGE.total.cfg.start_time)"></div>
+	</div>
+
+	<div id="DATA1">
+	<div class="box-1007">
+		<div class="row">
+			<div class="item">
+				<div class="date" v-cloak>{{ date }}</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="item">
+				<span class="number" v-cloak>{{ smtcount_step }}</span>
+				<span class="unit">chips</span>
+			</div>
+		</div>
+		<div class="row">
+			<div class="item">
+				<span class="number" v-cloak style="color: #aaa;">{{ base_boardcount }}</span>
+				<span class="unit">
+					<span>载板</span>
+					<span>pcs</span>
+				</span>
+			</div>
+			<div class="item">
+				<span class="number" v-cloak style="color: #aaa;">{{ boardcount }}</span>
+				<span class="unit">
+					<span>电路板</span>
+					<span>pcs</span>
+				</span>
+			</div>
+		</div>
+	</div>
+	<div class="box-1011" v-if="task_data.length>0">
+		<div class="row" v-for="item in task_data">
+			<div class="title">
+				<div>{{ item.name }}</div>
+			</div>
+			<div class="total">
+				<div class="base_boardcount">
+					<span class="iconfont icon-board-4-fill"></span>
+					<span class="num">{{ item.base_boardcount }}</span>
+					<span class="per" v-if="item.base_boardcount_percent>0">{{ item.base_boardcount_percent }}%</span>
+				</div>
+				<div class="boardcount">
+					<span class="iconfont icon-board-1-fill"></span>
+					<span class="num">{{ item.boardcount }}</span>
+					<span class="per" v-if="item.boardcount_percent>0">{{ item.boardcount_percent }}%</span>
+				</div>
+				<div class="smtcount">
+					<span class="iconfont icon-chips-fill"></span>
+					<span class="num">{{ item.smtcount }}</span>
+					<span class="per" v-if="item.smtcount_percent>0">{{ item.smtcount_percent }}%</span>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+	<div style="height: 180px; display: flex;">
+		<div id="charts_c1" style="flex: 1;"></div>
+		<div id="charts_c2" style="flex: 1;"></div>
+	</div>
+
+	<div class="box-1012" id="APP2" v-if="show" v-cloak>
+		<div class="title">线体情报</div>
+		<div class="stmline" v-for="smtrow in smtlines">
+			<div class="lineinfo">
+				<i class="icon1 iconfont icon-lianxian"></i>
+				<span class="name">{{ smtrow.stmline }}</span>
+				<span class="avg"><span>平均产能</span> {{ smtrow.capacity }}</span>
+				<span class="devicenum" @click="show_smtline(smtrow.id)"><b>{{ smtrow.linedata.length }}</b> 台设备</span>
+				<a class="icon2 iconfont" @click="show_smtline(smtrow.id)" v-bind:class="{'icon-xiangxia':current_smtline==smtrow.id,'icon-xiangyou':current_smtline!=smtrow.id}"></a>
+			</div>
+			<div class="device_list" v-if="current_smtline==smtrow.id">
+				<a class="item" v-for="device in smtrow.linedata" @click="show_task(device)">
+					<span><img src="/zdd/images/photo/device_default.png"></span>
+					<span class="title">{{ device.gw_id }}</span>
+				</a>
+			</div>
+		</div>
+	</div>
+
+	<div style="margin: 10px;">
+		<div class="box-1003">
+			<a href="javascript:;" class="current">效益曲线</a>
+			<a href="javascript:;">无产出时间</a>
+			<a href="javascript:;">有产出时间</a>
+		</div>
+		<div class="box-1004">
+			<div id="charts_a" style="width:100%;height:200px;padding: 5px 0 0 8px;"></div>
+
+		</div>
+	</div>
+
+	<div style="margin: 10px;">
+		<a href="/api/template/report_index.html" class="device_pick">
+			<span class="iconfont icon-tongji1-fill"></span>
+			<span class="text">各产线/设备生产情报</span>
+			<span class="iconfont icon-jiantouxia-fill"></span>
+		</a>
+	</div>
+
+	<div style="margin: 10px;">
+	<a href="/api/template/device_list.html" class="weui-btn weui-btn_default">设备管理</a>
+</div>
+</div>
+
+
+
+<script>
+	var SERVER_URL = "https://shop.zuoduoduo.cn";
+	var PAGE = {};
+	PAGE.charts_a = {
+		option: {
+			grid: {
+				top: 10,
+				right: 10,
+				bottom: 30
+			},
+			tooltip : {
+				trigger: 'axis',
+				axisPointer : {
+					type : 'shadow'
+				}
+			},
+			xAxis: [
+				{
+					type: 'category',
+					data: [],
+					axisTick: {
+						show: false
+					},
+					axisLabel: {
+						color: "#999",
+						fontSize: 9
+					},
+					axisLine: {
+						lineStyle: {
+							color: "#e3e3e3"
+						}
+					}
+				}
+			],
+			yAxis: [
+				{
+					type: 'value',
+					axisLabel: {
+						fontSize: 9,
+						color: "#555"
+					},
+					axisLine: {
+						lineStyle: {
+							color: "#e3e3e3"
+						}
+					},
+					splitLine: {
+						lineStyle: {
+							color: "#efefef"
+						}
+					}
+				}
+			],
+			series: [
+				{
+					name:'SMT1',
+					type:'line',
+					smooth: true,
+					showSymbol: false,
+					data: [2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 185.6, 132.2, 48.7, 18.8, 60, 9],
+					lineStyle: {
+						width: 1
+					}
+				},
+				{
+					name:'SMT2',
+					type:'line',
+					smooth: true,
+					showSymbol: false,
+					data: [3.9, 5.9, 11.1, 18.7, 48.3, 69.2, 231.6, -46.6, 55.4, 18.4, 10.3, 0.7],
+					lineStyle: {
+						width: 1
+					}
+				}
+			]
+		},
+		init: function(){
+			var xAxis = this.option.xAxis[0].data;
+			var myDate = new Date();
+			for(var i=0; i<12; i++){
+				var hour = myDate.getHours()-i;
+				xAxis.push((hour>=0?hour:(hour+24))+":00");
+			}
+			xAxis.reverse();
+			/*
+			var series = this.option.series.data;
+			for(var i=0; i<10; i++){
+				series.push(parseInt(Math.random()*60));
+			}
+			*/
+			var myChart = echarts.init(document.getElementById('charts_a'), null, {renderer: 'svg'});
+			myChart.setOption(this.option);
+		}
+	};
+	PAGE.charts_c1 = {
+		option: {
+			tooltip : {
+				trigger: 'item',
+				formatter: function (item) {
+					console.log(item);
+					return item.name + "<br>" + item.data.base_boardcount + "载板 " + item.data.base_boardcount_ratio + "<br>" + item.data.boardcount + "电路 " + item.data.boardcount_ratio;
+				},
+				textStyle: {
+					fontSize: 10
+				}
+			},
+			emphasis: {
+				itemStyle: {
+					shadowOffsetX: 0,
+					shadowOffsetY: 0,
+					shadowBlur: 0
+				}
+			},
+			series : {
+				name: '板数',
+				type: 'pie',
+				radius : ['50%', '88%'],
+				center: ['53%', '50%'],
+				hoverOffset: 2,
+				legendHoverLink: false,
+				label: {
+					show: false
+				},
+				data:[
+					{value:335, name:'XMPMZ-16016', base_boardcount:4500, base_boardcount_ratio:"52%", boardcount:8000, boardcount_ratio:"50%"},
+					{value:310, name:'XMPMZ-16017', base_boardcount:4500, base_boardcount_ratio:"52%", boardcount:8000, boardcount_ratio:"50%"},
+					{value:234, name:'XMPMZ-16018', base_boardcount:4500, base_boardcount_ratio:"52%", boardcount:8000, boardcount_ratio:"50%"},
+					{value:135, name:'XMPMZ-16019', base_boardcount:4500, base_boardcount_ratio:"52%", boardcount:8000, boardcount_ratio:"50%"},
+				],
+				itemStyle: {
+					emphasis: {
+						shadowBlur: 10,
+						shadowOffsetX: 0,
+						shadowColor: 'rgba(0, 0, 0, 0.5)'
+					}
+				}
+			}
+		},
+		init: function () {
+			var colors = ["#F7C9DD", "#ED86B3", "#A574B0", "#A3ABD6", "#D1CCE5", "#FDEBD1", "#FEE9A9"];
+			for(var i in this.option.series.data){
+				if(colors[i]){
+					this.option.series.data[i].itemStyle = {};
+					this.option.series.data[i].itemStyle.color = colors[i];
+				}
+			}
+			var myChart = echarts.init(document.getElementById('charts_c1'), null, {renderer: 'svg'});
+			myChart.setOption(this.option);
+		}
+	};
+	PAGE.charts_c2 = {
+		option: {
+			tooltip : {
+				trigger: 'item',
+				formatter: function (item) {
+					console.log(item);
+					return item.name + "<br>" + item.value + "chips  " + item.percent + "%";
+				},
+				textStyle: {
+					fontSize: 10
+				}
+			},
+			series : {
+				name: 'SMT数量',
+				type: 'pie',
+				radius : ['50%', '88%'],
+				center: ['47%', '50%'],
+				hoverOffset: 2,
+				label: {
+					show: false
+				},
+				data:[
+					{value:105907, name:'XMPMZ-16016'},
+					{value:210324, name:'XMPMZ-16017'},
+					{value:123443, name:'XMPMZ-16018'},
+					{value:93523, name:'XMPMZ-16019'},
+				],
+				itemStyle: {
+					emphasis: {
+						shadowBlur: 10,
+						shadowOffsetX: 0,
+						shadowColor: 'rgba(0, 0, 0, 0.5)'
+					}
+				}
+			}
+		},
+		init: function () {
+			var colors = ["#E7DDED", "#CC99FF", "#B3E5FC", "#90CAF9", "#26C6DA", "#B2EBF2"];
+			for(var i in this.option.series.data){
+				if(colors[i]){
+					this.option.series.data[i].itemStyle = {};
+					this.option.series.data[i].itemStyle.color = colors[i];
+				}
+			}
+			var myChart = echarts.init(document.getElementById('charts_c2'), null, {renderer: 'svg'});
+			myChart.setOption(this.option);
+		}
+	};
+	PAGE.total = {
+		cfg: {
+			polling: true,
+			reload_lock: false,
+			date: "",
+			start_time: 0,
+			end_time: 0,
+			smtcount_step: 0,
+			smtcount: 0,
+			boardcount: 0,
+			base_boardcount: 0,
+			task_data: []
+		},
+		IntervalObj: null,
+		settimeout: null,
+		// 初始入口
+		init: function () {
+			this.set_date();
+			this.load_total();
+		},
+		// 设置查询的日期数据
+		set_date: function (unix) {
+			unix = unix || format_time2unix("", 2);
+			this.cfg.start_time = unix;
+			this.cfg.end_time = unix + 86400 - 1;
+			this.cfg.date = format_unixtime("%M月%D, %Y", unix);
+		},
+		// 加载统计数据
+		load_total: function () {
+			if(this.cfg.reload_lock) return;
+			var me = this;
+			var datas = {
+				start_time: this.cfg.start_time,
+				end_time: this.cfg.end_time,
+			};
+			this.cfg.reload_lock = true;
+			var ajax = $.ajax({
+				url: SERVER_URL + "/api/smtreport/get_smt_count",
+				data: datas,
+				dataType: "json",
+				success: function(data){
+					me.cfg.reload_lock = false;
+					if(data["ErrorCode"]==0){
+						me.steptime_smtcount(data.smt_count);
+						me.cfg.smtcount = data.smt_count;
+						me.cfg.boardcount = data.boardcount;
+						me.cfg.base_boardcount = data.base_boardcount;
+						me.handles_total(data);
+					}
+					if(me.cfg.polling){
+						me.settimeout = window.setTimeout(function(){
+							me.load_total();
+						}, 10000);
+					}
+				}
+			});
+		},
+		// 步进变化SMT数量
+		steptime_smtcount(result) {
+			var me = this;
+			var num = me.cfg.smtcount_step, step = parseInt((result-num)/49);
+			step = step<1 ? 1 :step;
+			window.clearInterval(me.IntervalObj);
+			me.IntervalObj = window.setInterval(function(){
+				num += step;
+				if(num>=result){
+					num = result;
+					window.clearInterval(me.IntervalObj);
+				}
+				me.cfg.smtcount_step = parseInt(num);
+			}, 20);
+		},
+		// 按任务处理统计数据
+		handles_total: function (datas) {
+			var cfg = this.cfg;
+			var TASK = {};
+			var task_data = [];
+			var get_name = function (val) {
+				var a = val.split("\\");
+				return a.length>0 ? a[a.length-1] : "";
+			};
+			var task_extend = function (options) {
+				options.task_id = options.task_id || 0;
+				if(!TASK["task_" + options.task_id]){
+					var task_name = "任务" + options.task_id;
+					if(options.task_name){
+						task_name = options.task_name;
+						if(options.task_name.length>3) {
+							task_name = options.task_name.substring(0,3)+"***";
+						}
+						if(options.task_name.length>7) {
+							task_name += options.task_name.substr(-3);
+						}
+					}
+					TASK["task_" + options.task_id] = {
+						id: options.task_id,
+						name: task_name,
+						smtcount: 0,
+						smtcount_percent: 0,
+						boardcount: 0,
+						boardcount_percent: 0,
+						base_boardcount: 0,
+						base_boardcount_percent: 0,
+					};
+				}
+				if(options.smtcount) TASK["task_" + options.task_id]["smtcount"] += options.smtcount;
+				if(options.boardcount) TASK["task_" + options.task_id]["boardcount"] += options.boardcount;
+				if(options.base_boardcount) TASK["task_" + options.task_id]["base_boardcount"] += options.base_boardcount;
+			};
+			for(var i in datas.task_smt_count){
+				task_extend({
+					task_id: datas.task_smt_count[i]["id"],
+					task_name: get_name(datas.task_smt_count[i]["name"]),
+					smtcount: parseInt(datas.task_smt_count[i]["count"])
+				});
+			}
+			for(var i in datas.task_boardcount){
+				task_extend({
+					task_id: datas.task_boardcount[i]["id"],
+					task_name: get_name(datas.task_boardcount[i]["name"]),
+					boardcount: parseInt(datas.task_boardcount[i]["count"])
+				});
+			}
+			for(var i in datas.task_base_boardcount){
+				task_extend({
+					task_id: datas.task_base_boardcount[i]["id"],
+					task_name: get_name(datas.task_base_boardcount[i]["name"]),
+					base_boardcount: parseInt(datas.task_base_boardcount[i]["count"])
+				});
+			}
+			for(var i in TASK){
+				var row = TASK[i];
+				row["smtcount_percent"] = parseInt(1000*row["smtcount"]/cfg.smtcount)/10;
+				row["boardcount_percent"] = parseInt(1000*row["boardcount"]/cfg.boardcount)/10;
+				row["base_boardcount_percent"] = parseInt(1000*row["base_boardcount"]/cfg.base_boardcount)/10;
+				task_data.push(row);
+			}
+			this.cfg.task_data = task_data;
+		},
+		// 强制加载统计数据
+		force_load_total() {
+			window.clearTimeout(this.settimeout);
+			this.load_total();
+		}
+	};
+	PAGE.picktime = function (time) {
+			$(".mui-dtpicker[data-type='date']").remove();
+			this.Obj = new mui.DtPicker({
+				type: "date",
+				value: format_unixtime("%Y-%M-%D", time)
+			});
+			this.Obj.show(function(rs) {
+				var time = rs.y.value+"/"+rs.m.value+"/"+rs.d.value+" 00:00:00";
+				var unix = format_timeunix(time);
+				PAGE.total.set_date(unix);
+				PAGE.total.force_load_total();
+			});
+	};
+	PAGE.stmline = {
+		data: {
+			show: true,
+			current_smtline: -1,
+			smtlines: {}
+		},
+		init: function () {
+			this.loaddata();
+		},
+		loaddata: function () {
+			var me = this;
+			var datas = {};
+			var ajax = $.ajax({
+				url: SERVER_URL + "/api/smteffecttime/get_today_effective_time",
+				data: datas,
+				dataType: "json",
+				success: function(data){
+					if(data["ErrorCode"]==0){
+						for(var i=0; i<data.data.length; i++){
+							data.data[i]["id"] = i;
+							data.data[i]["capacity"] = "20Chips/h";
+						}
+						me.data.smtlines = data.data;
+					}
+				}
+			});
+		}
+	};
+	function format_timeunix(val){
+		return parseInt(new Date(val).getTime()/1000);
+	}
+	$(function(){
+		layui.config({base: "/zdd/modules/"});
+		var app1 = new Vue({
+			el: '#DATA1',
+			data: PAGE.total.cfg,
+			methods: {}
+		});
+		var APP2 = new Vue({
+			el: '#APP2',
+			data: PAGE.stmline.data,
+			methods: {
+				show_smtline: function (id) {
+					this.current_smtline = this.current_smtline==id ? -1 : id;
+				},
+				show_task: function (device) {
+					layui.use(["task_list"], function (E) {
+						E["init"]({
+							respage: "#PAGE_MAIN",
+							data: device,
+							scrollTop: $(document).scrollTop()
+						});
+					});
+				}
+			}
+		});
+		PAGE.charts_a.init();
+		PAGE.charts_c1.init();
+		PAGE.charts_c2.init();
+		PAGE.total.init();
+		PAGE.stmline.init();
+		var a = getCookie("key");
+
+	});
+</script>
+</body>
+</html>
+

@@ -1,0 +1,354 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-touch-fullscreen" content="yes" />
+<meta name="format-detection" content="telephone=no"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="msapplication-tap-highlight" content="no" />
+<meta name="viewport" content="initial-scale=1,maximum-scale=1,minimum-scale=1" />
+<title></title>
+	<link rel="stylesheet" href="/zdd/mui/css/mui.min.css">
+	<link rel="stylesheet" href="/zdd/mui/css/mui.picker.min.css">
+	<link rel="stylesheet" href="/zdd/ui/layer_mobile/need/layer.css">
+	<link rel="stylesheet" href="/zdd/iconfont/iconfont.css?v=1.1">
+	<link rel="stylesheet" href="/zdd/images/zdd.css">
+	<script type="text/javascript" src="/zdd/ui/jquery/jquery-1.12.4.min.js"></script>
+	<script type="text/javascript" src="/zdd/ui/vue/v2.5.17/vue.min.js"></script>
+	<script type="text/javascript" src="/zdd/ui/layui/v2.4.5/layui.js"></script>
+	<script type="text/javascript" src="/zdd/ui/layer_mobile/layer.js"></script>
+	<script type="text/javascript" src="/zdd/mui/js/mui.min.js"></script>
+	<script type="text/javascript" src="/zdd/mui/js/mui.picker.min.js"></script>
+	<script type="text/javascript" src="/zdd/js/common.js?v=1.1"></script>
+	<script type="text/javascript" src="/zdd/ui/echarts/echarts.common.min.js"></script>
+	<style type="text/css">
+		body{ font-size: 12px;}
+		.mui-btn{ color: #ccc;}
+		.mui-btn.mui-btn-primary,
+		.mui-btn.mui-btn-warning{ color: #fff;}
+		.mui-table-view-cell{ color:#ccc;}
+		.mui-table-view-cell .value{ color: #333; display: inline-block; margin-left: 10px;}
+
+		.box-1004{ border: 1px solid #ddd; border-top:0; background: #fff;}
+		.box-1004 .tools{width:100%; height:50px; padding:10px; display: flex; align-items: center;}
+		.box-1004 .tools .pick_time{ flex: auto;}
+		.box-1004 .tools .page{ width: 60px;}
+		.box-1004 .tools .page a{ margin-left: 5px; }
+		.box-1003{ height: 35px; border-bottom: 1px solid #ddd; background: #f9f9f9;}
+		.box-1003 a{ display: block; height: 35px; border:1px solid #ccc; margin-right: -1px; position: relative; float: left; background: #ebebeb; color: #9b9b9b; font-size: 15px; padding: 0 15px 0 15px; line-height: 32px; border-radius: 5px 5px 0 0;}
+		.box-1003 a.current{ background: #fff; border-bottom: 1px solid #e7e7e7; }
+
+		.box-1007{ display: flex; flex-direction:column; padding: 8px; background: #fcfcfc; margin: 0 10px 10px 10px; border-radius: 6px;}
+		.box-1007 .row{ display: flex; padding-top: 10px;}
+		.box-1007 .row .date{ color: #ccc; padding: 0 0 0 5px; font-size: 14px;}
+		.box-1007 .row .item{ display: flex; flex: auto; align-items: flex-end;}
+		.box-1007 .row .item .number{ font-size: 36px; color: #333; line-height: 1;}
+		.box-1007 .row .item .unit{ display: flex; flex-direction:column; color: #ccc; font-size: 10px; line-height: 1.2; padding-left: 5px; padding-bottom: 5px;}
+
+	</style>
+</head>
+
+<body>
+<div id="main_page">
+	<header class="mui-bar mui-bar-nav">
+		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		<h1 class="mui-title">生产报告</h1>
+		<a class="mui-icon mui-icon-bars mui-pull-right"></a>
+	</header>
+	<div class="mui-content" id="APP1">
+		<div style="padding: 10px 10px 0 10px;">
+			<button type="button" class="mui-btn" data-val="0" v-on:click="settag" :class="tag==0?'mui-btn-primary':''">今天</button>
+			<button type="button" class="mui-btn" data-val="-1" v-on:click="settag" :class="tag==-1?'mui-btn-primary':''">昨天</button>
+			<button type="button" class="mui-btn" data-val="-7" v-on:click="settag" :class="tag==-7?'mui-btn-primary':''">近七天</button>
+			<button type="button" class="mui-btn" data-val="-30" v-on:click="settag" :class="tag==-30?'mui-btn-primary':''">近30天</button>
+		</div>
+		<ul class="mui-card" id="DATA2" style="padding:0;">
+			<li class="mui-table-view-cell H_PICK_STARTTIME">
+				<a class="mui-navigate-right">
+					开始时间 <span class="value">{{ start_time_str }}</span>
+				</a>
+			</li>
+			<li class="mui-table-view-cell H_PICK_ENDTIME">
+				<a class="mui-navigate-right">
+					结束时间 <span class="value">{{ end_time_str }}</span>
+				</a>
+			</li>
+			<li class="mui-table-view-cell H_PICK_TASK">
+				<a class="mui-navigate-right">
+					设备/任务  <span class="value">{{ device_id_str }}</span>
+				</a>
+			</li>
+		</ul>
+		<div style="padding: 10px;">
+			<button type="button" class="mui-btn mui-btn-warning mui-btn-block" onclick="PAGE.loading()">统计</button>
+		</div>
+		<div class="box-1007" id="DATA1" v-cloak>
+			<div class="row">
+				<div class="item">
+					<span class="number">{{ smtcount }}</span>
+					<span class="unit">chips</span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="item">
+					<span class="number" style="color: #aaa;">{{ base_boardcount }}</span>
+			<span class="unit">
+				<span>载板</span>
+				<span>pcs</span>
+			</span>
+				</div>
+				<div class="item">
+					<span class="number" style="color: #aaa;">{{ boardcount }}</span>
+			<span class="unit">
+				<span>电路板</span>
+				<span>pcs</span>
+			</span>
+				</div>
+			</div>
+		</div>
+		<div style="margin: 10px;">
+			<div class="box-1003">
+				<a href="javascript:;" class="current">SMT点数</a>
+				<a href="javascript:;">基板</a>
+				<a href="javascript:;">无产出</a>
+				<a href="javascript:;">有产出</a>
+			</div>
+			<div class="box-1004">
+				<div class="tools">
+					<div class="pick_time">
+						<button type="button" class="mui-btn mui-btn-primary">10分钟</button>
+						<button type="button" class="mui-btn">小时</button>
+						<button type="button" class="mui-btn">天</button>
+						<button type="button" class="mui-btn">月</button>
+						<button type="button" class="mui-btn">年</button>
+					</div>
+					<div class="page">
+						<a href="javascript:;" class="iconfont icon-jiantouzuo-fill"></a>
+						<a href="javascript:;" class="iconfont icon-jiantouyou-fill"></a>
+					</div>
+				</div>
+				<div id="charts_a" style="width:100%;height:230px;padding: 5px 0 0 8px;"></div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+	function format_timeunix(val){
+		return parseInt(new Date(val).getTime()/1000);
+	}
+var SERVER_URL = "https://shop.zuoduoduo.cn";
+var DATA2 = {
+	smtcount: "0",
+	boardcount: "0",
+	base_boardcount: "0",
+	start_time: 0,
+	start_time_str: "",
+	end_time: 0,
+	end_time_str: "",
+	device_id: "",
+	device_id_str: "不限",
+	sub_id: "",
+	task_id: "",
+	tag: 0,
+	show_task: true
+};
+var PAGE = {
+	setTime: function (day) {
+		var D = DATA2,
+			today_unix = format_time2unix("", 2),
+			start_time = today_unix + 86400 * day,
+			end_time = day==-1 ? (today_unix - 1) : (today_unix+86400-1);
+		D.start_time = start_time;
+		D.start_time_str = format_unixtime("%Y-%M-%D %H:%I", start_time);
+		D.end_time = end_time;
+		D.end_time_str = format_unixtime("%Y-%M-%D %H:%I", end_time);
+	},
+	init: function(){
+		var me = this;
+		me.setTime(0);
+		var APP1 = new Vue({
+			el: '#APP1',
+			data: DATA2,
+			methods:{
+				settag: function (e) {
+					DATA2.tag = e.target.dataset.val;
+					me.setTime(DATA2.tag);
+				}
+			}
+		});
+		$(document).on("click", ".H_PICK_STARTTIME", function () {
+			var picker = new mui.DtPicker({
+				value: DATA2.start_time_str
+			});
+			picker.show(function(rs) {
+				var time = rs.text+":00";
+				DATA2.start_time_str = rs.text;
+				DATA2.start_time = format_timeunix(time);
+				picker.dispose();
+			});
+		});
+		$(document).on("click", ".H_PICK_ENDTIME", function () {
+			var picker = new mui.DtPicker({
+				value: DATA2.end_time_str
+			});
+			picker.show(function(rs) {
+				var time = rs.text+":00";
+				DATA2.end_time_str = rs.text;
+				DATA2.end_time = format_timeunix(time);
+				picker.dispose();
+			});
+		});
+		$(document).on("click", ".H_PICK_TASK", function (e) {
+			me.pick_device(e);
+		});
+		this.loading();
+	},
+	loading: function(){
+		var me = this;
+		var datas = {
+			start_time: DATA2.start_time,
+			end_time: DATA2.end_time,
+			gateway_id: DATA2.device_id,
+			device_sub_id: DATA2.sub_id,
+			task_id: DATA2.task_id
+		};
+		$.ajax({
+			//url: SERVER_URL+"/api/smtreport/get_today_count",
+			url: SERVER_URL+"/api/smtreport/get_smt_count",
+			data: datas,
+			type: "POST",
+			dataType: "json",
+			success: function(data){
+				if(data["ErrorCode"]==0){
+					DATA2.smtcount = data.smt_count;
+					DATA2.boardcount = data.boardcount;
+					DATA2.base_boardcount = data.base_boardcount;
+				}
+			}
+		});
+	},
+	pick_device: function(e) {
+		layui.use("pick_device", function (E) {
+			var D = DATA2;
+			E["init"]({
+				respage: "#main_page",
+				start_time: DATA2.start_time,
+				end_time: DATA2.end_time,
+				data: [{
+					device_id:DATA2.device_id,
+					task_id:DATA2.task_id,
+					sub_id:DATA2.sub_id
+				}],
+				resfun: function (data) {
+					DATA2.device_id_str = data[0] && data[0]["device_id_str"] || "不限";
+					DATA2.device_id = data[0] && data[0]["device_id"] || "";
+					DATA2.task_id = data[0] && data[0]["task_id"] || "";
+					DATA2.sub_id = data[0] && data[0]["sub_id"] || "";
+				}
+			});
+		});
+	}
+};
+PAGE.charts_a = {
+	option: {
+		grid: {
+			top: 10,
+			right: 10,
+			bottom: 30
+		},
+		tooltip : {
+			trigger: 'axis',
+			axisPointer : {
+				type : 'shadow'
+			}
+		},
+		xAxis: [
+			{
+				type: 'category',
+				data: [],
+				axisTick: {
+					show: false
+				},
+				axisLabel: {
+					color: "#999",
+					fontSize: 9
+				},
+				axisLine: {
+					lineStyle: {
+						color: "#e3e3e3"
+					}
+				}
+			}
+		],
+		yAxis: [
+			{
+				type: 'value',
+				axisLabel: {
+					fontSize: 9,
+					color: "#555"
+				},
+				axisLine: {
+					lineStyle: {
+						color: "#e3e3e3"
+					}
+				},
+				splitLine: {
+					lineStyle: {
+						color: "#efefef"
+					}
+				}
+			}
+		],
+		series: [
+			{
+				name:'SMT1',
+				type:'line',
+				smooth: true,
+				showSymbol: false,
+				data: [2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 185.6, 132.2, 48.7, 18.8, 60, 9],
+				lineStyle: {
+					width: 1
+				}
+			},
+			{
+				name:'SMT2',
+				type:'line',
+				smooth: true,
+				showSymbol: false,
+				data: [3.9, 5.9, 11.1, 18.7, 48.3, 69.2, 231.6, -46.6, 55.4, 18.4, 10.3, 0.7],
+				lineStyle: {
+					width: 1
+				}
+			}
+		]
+	},
+	init: function(){
+		var xAxis = this.option.xAxis[0].data;
+		var myDate = new Date();
+		for(var i=0; i<12; i++){
+			var hour = myDate.getHours()-i;
+			xAxis.push((hour>=0?hour:(hour+24))+":00");
+		}
+		xAxis.reverse();
+		var myChart = echarts.init(document.getElementById('charts_a'), null, {renderer: 'svg'});
+		myChart.setOption(this.option);
+	}
+};
+$(function(){
+	PAGE.init();
+	PAGE.charts_a.init();
+});
+(function($) {
+	$.init();
+})(mui);
+</script>
+<script>
+	layui.config({base: "/zdd/modules/"});
+</script>
+</body>
+</html>
+

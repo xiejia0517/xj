@@ -1,0 +1,627 @@
+<html><head><style>body {
+   color: black;
+}
+</style></head><body><p>目录</p>
+<p>1. 获得网关列表</p>
+<p>2. 获得设备列表</p>
+<p>3. 获得任务列表</p>
+<p>4. 获得生产统计量</p>
+<p>5. 获得生产图表数据</p>
+<p>6. 获得每条产线的有效运行时间</p>
+<hr>
+<p><strong>1. 获得网关列表</strong></p>
+<h5 id="-">接口功能</h5>
+<blockquote>
+<p>获取当前用户的网关列表</p>
+</blockquote>
+<h5 id="url">URL</h5>
+<blockquote>
+<p><a href="http://shop.zuoduoduo.cn/api/smtreport/get_gateways">http://shop.zuoduoduo.cn/api/smtreport/get_gateways</a></p>
+</blockquote>
+<h5 id="-">支持格式</h5>
+<blockquote>
+<p>URL</p>
+</blockquote>
+<h5 id="http-">HTTP请求方式</h5>
+<blockquote>
+<p>GET</p>
+</blockquote>
+<h5 id="-">请求参数</h5>
+<blockquote>
+<p>无</p>
+</blockquote>
+<h5 id="-">返回字段</h5>
+<blockquote>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">返回字段</th>
+<th style="text-align:left">字段类型</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">gateway_list</td>
+<td style="text-align:left">array</td>
+<td style="text-align:left">网关清单,包含网关所属的产线名称（一个网关可以属于多条产线）</td>
+</tr>
+<tr>
+<td style="text-align:left">runtime</td>
+<td style="text-align:left">int</td>
+<td style="text-align:left">接口处理时间</td>
+</tr>
+<tr>
+<td style="text-align:left">ErrorCode</td>
+<td style="text-align:left">int</td>
+<td style="text-align:left">结果状态。0：正常；1：错误</td>
+</tr>
+<tr>
+<td style="text-align:left">ErrorMsg</td>
+<td style="text-align:left">string</td>
+<td style="text-align:left">结果信息</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+<h5 id="-">接口示例</h5>
+<blockquote>
+<p>地址：
+<a href="http://shop.zuoduoduo.cn/api/smtreport/get_gateways">http://shop.zuoduoduo.cn/api/smtreport/get_gateways</a></p>
+<p>返回：
+{<br/>
+  &quot;gateway_list&quot;:[{&quot;id&quot;:&quot;zdd-2018112204&quot;,&quot;line&quot;:[&quot;\u4ea7\u7ebf2&quot;,&quot;\u672a\u77e5\u4ea7\u7ebf&quot;]},{&quot;id&quot;:&quot;zdd-2018112205&quot;,&quot;line&quot;:[&quot;\u4ea7\u7ebf3&quot;]}],<br/>
+  &quot;runtime&quot;:441,<br/>
+  &quot;ErrorCode&quot;:0,<br/>
+  &quot;ErrorMsg&quot;:&quot;OK&quot;<br/>
+}
+<br/><br/></p>
+</blockquote>
+<p><strong>2. 获得设备列表</strong></p>
+<h5 id="-">接口功能</h5>
+<blockquote>
+<p>获取当前用户的设备列表</p>
+</blockquote>
+<h5 id="url">URL</h5>
+<blockquote>
+<p><a href="http://shop.zuoduoduo.cn/api/smtreport/get_devices">http://shop.zuoduoduo.cn/api/smtreport/get_devices</a></p>
+</blockquote>
+<h5 id="-">支持格式</h5>
+<blockquote>
+<p>URL</p>
+</blockquote>
+<h5 id="http-">HTTP请求方式</h5>
+<blockquote>
+<p>GET</p>
+</blockquote>
+<h5 id="-">请求参数</h5>
+<blockquote>
+<p>无</p>
+</blockquote>
+<h5 id="-">返回字段</h5>
+<blockquote>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">返回字段</th>
+<th style="text-align:left">字段类型</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">device_list</td>
+<td style="text-align:left">array</td>
+<td style="text-align:left">设备清单</td>
+</tr>
+<tr>
+<td style="text-align:left">runtime</td>
+<td style="text-align:left">int</td>
+<td style="text-align:left">接口处理时间</td>
+</tr>
+<tr>
+<td style="text-align:left">ErrorCode</td>
+<td style="text-align:left">int</td>
+<td style="text-align:left">结果状态。0：正常；1：错误。</td>
+</tr>
+<tr>
+<td style="text-align:left">ErrorMsg</td>
+<td style="text-align:left">string</td>
+<td style="text-align:left">结果信息</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+<h5 id="-">接口示例</h5>
+<blockquote>
+<p>地址：
+<a href="http://shop.zuoduoduo.cn/api/smtreport/get_devices">http://shop.zuoduoduo.cn/api/smtreport/get_devices</a></p>
+<p>返回：
+{<br/>
+  &quot;device_list&quot;:[{&quot;gateway_id&quot;:&quot;zdd-2018112204&quot;,&quot;model_name&quot;:&quot;JUKI_KE_2050M&quot;,&quot;sub_id&quot;:1,&quot;online_status&quot;:1,&quot;line&quot;:&quot;产线2&quot;},{&quot;gateway_id&quot;:&quot;zdd-2018112204&quot;,&quot;model_name&quot;:&quot;JUKI_KE_3010AL&quot;,&quot;sub_id&quot;:3,&quot;online_status&quot;:0,&quot;line&quot;:&quot;未知产线&quot;}],<br/>
+  &quot;runtime&quot;:441,<br/>
+  &quot;ErrorCode&quot;:0,<br/>
+  &quot;ErrorMsg&quot;:&quot;OK&quot;<br/>
+}
+<br/><br/></p>
+</blockquote>
+<p><strong>3. 获得任务列表</strong></p>
+<h5 id="-">接口功能</h5>
+<blockquote>
+<p>获取当前用户的设备列表，可以指定一个生产的（注意不是任务创建的）时间区间</p>
+</blockquote>
+<h5 id="url">URL</h5>
+<blockquote>
+<p><a href="http://shop.zuoduoduo.cn/api/smtreport/get_tasks">http://shop.zuoduoduo.cn/api/smtreport/get_tasks</a></p>
+</blockquote>
+<h5 id="-">支持格式</h5>
+<blockquote>
+<p>URL</p>
+</blockquote>
+<h5 id="http-">HTTP请求方式</h5>
+<blockquote>
+<p>GET</p>
+</blockquote>
+<h5 id="-">请求参数</h5>
+<blockquote>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">参数</th>
+<th style="text-align:left">必选</th>
+<th style="text-align:left">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">page</td>
+<td style="text-align:left">false</td>
+<td style="text-align:left">int</td>
+<td>请求的页码数，若不给则默认为0。小于等于0时，表示不分页，返回所有查询到的结果</td>
+</tr>
+<tr>
+<td style="text-align:left">start_time</td>
+<td style="text-align:left">false</td>
+<td style="text-align:left">int</td>
+<td>生产区间的开始时间</td>
+</tr>
+<tr>
+<td style="text-align:left">end_time</td>
+<td style="text-align:left">false</td>
+<td style="text-align:left">int</td>
+<td>生产区间的结束时间</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+<h5 id="-">返回字段</h5>
+<blockquote>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">返回字段</th>
+<th style="text-align:left">字段类型</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">task_list</td>
+<td style="text-align:left">array</td>
+<td style="text-align:left">设备清单</td>
+</tr>
+<tr>
+<td style="text-align:left">page_number</td>
+<td style="text-align:left">int</td>
+<td style="text-align:left">查询的页码</td>
+</tr>
+<tr>
+<td style="text-align:left">runtime</td>
+<td style="text-align:left">int</td>
+<td style="text-align:left">接口处理时间</td>
+</tr>
+<tr>
+<td style="text-align:left">ErrorCode</td>
+<td style="text-align:left">int</td>
+<td style="text-align:left">结果状态。0：正常；1：错误。</td>
+</tr>
+<tr>
+<td style="text-align:left">ErrorMsg</td>
+<td style="text-align:left">string</td>
+<td style="text-align:left">结果信息</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+<h5 id="-">接口示例</h5>
+<blockquote>
+<p>地址：
+<a href="http://shop.zuoduoduo.cn/api/smtreport/get_tasks">http://shop.zuoduoduo.cn/api/smtreport/get_tasks</a></p>
+<p>返回：
+{<br/>
+  &quot;task_list&quot;:[{&quot;task_id&quot;:25,&quot;gateway_id&quot;:&quot;zdd-2018112208&quot;,&quot;sub_id&quot;:4,&quot;task_name&quot;:&quot;C:\PRG\P5-3232-16S-V1.0.E45&quot;,&quot;create_time&quot;:&quot;2018-12-04 11:02:23&quot;,&quot;line&quot;:&quot;产线2&quot;},{&quot;task_id&quot;:26,&quot;gateway_id&quot;:&quot;zdd-2018112208&quot;,&quot;sub_id&quot;:5,&quot;task_name&quot;:&quot;C:\PRG\P5-3232-16S-V1.0.E45&quot;,&quot;create_time&quot;:&quot;2018-12-04 11:02:24&quot;,&quot;line&quot;:&quot;产线1&quot;}],<br/>
+  &quot;page_number&quot;:1,<br/>
+  &quot;runtime&quot;:441,<br/>
+  &quot;ErrorCode&quot;:0,<br/>
+  &quot;ErrorMsg&quot;:&quot;OK&quot;<br/>
+}
+<br/><br/></p>
+</blockquote>
+<p><strong>4. 获得生产统计量</strong></p>
+<h5 id="-">接口功能</h5>
+<blockquote>
+<p>获取当前用户在给定时间段内的统计量，同时可以用给定的条件进行灵活的查询：网关ID、设备子ID、任务ID</p>
+</blockquote>
+<h5 id="url">URL</h5>
+<blockquote>
+<p><a href="http://shop.zuoduoduo.cn/api/smtreport/get_smt_count">http://shop.zuoduoduo.cn/api/smtreport/get_smt_count</a></p>
+</blockquote>
+<h5 id="-">支持格式</h5>
+<blockquote>
+<p>URL</p>
+</blockquote>
+<h5 id="http-">HTTP请求方式</h5>
+<blockquote>
+<p>GET</p>
+</blockquote>
+<h5 id="-">请求参数</h5>
+<blockquote>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">参数</th>
+<th style="text-align:left">必选</th>
+<th style="text-align:left">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">start_time</td>
+<td style="text-align:left">true</td>
+<td style="text-align:left">int</td>
+<td>查询的开始时间点</td>
+</tr>
+<tr>
+<td style="text-align:left">end_time</td>
+<td style="text-align:left">true</td>
+<td style="text-align:left">int</td>
+<td>查询的结束时间点</td>
+</tr>
+<tr>
+<td style="text-align:left">gateway_id</td>
+<td style="text-align:left">false</td>
+<td style="text-align:left">string</td>
+<td>网关ID，若为空则查询所有网关</td>
+</tr>
+<tr>
+<td style="text-align:left">device_sub_id</td>
+<td style="text-align:left">false</td>
+<td style="text-align:left">int</td>
+<td>设备子ID，若为空则查询网关下的所有设备. 如果gateway_id为空, 则该参数会被忽略</td>
+</tr>
+<tr>
+<td style="text-align:left">task_id</td>
+<td style="text-align:left">false</td>
+<td style="text-align:left">int</td>
+<td>任务ID，若gateway_id和device_sub_id都为空，则该参数会被忽略</td>
+</tr>
+</tbody>
+</table>
+<p>注：基板总数和电路总数的统计量，和gateway_id、device_sub_id、task_id都没有直接关联，这些数据只和生产线相关</p>
+</blockquote>
+<h5 id="-">返回字段</h5>
+<blockquote>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">返回字段</th>
+<th style="text-align:left">字段类型</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">smt_count</td>
+<td style="text-align:left">int</td>
+<td style="text-align:left">贴片总数</td>
+</tr>
+<tr>
+<td style="text-align:left">device_smt_count</td>
+<td style="text-align:left">array</td>
+<td style="text-align:left">每台设备的贴片总数，设备标识符由“网关ID-设备子ID”表示</td>
+</tr>
+<tr>
+<td style="text-align:left">task_smt_count</td>
+<td style="text-align:left">array</td>
+<td style="text-align:left">每个任务的贴片总数</td>
+</tr>
+<tr>
+<td style="text-align:left">base_boardcount</td>
+<td style="text-align:left">int</td>
+<td style="text-align:left">基板总数</td>
+</tr>
+<tr>
+<td style="text-align:left">device_base_boardcount</td>
+<td style="text-align:left">array</td>
+<td style="text-align:left">每台网关的基板总数</td>
+</tr>
+<tr>
+<td style="text-align:left">task_base_boardcount</td>
+<td style="text-align:left">array</td>
+<td style="text-align:left">每个任务的基板总数，设备标识符由“网关ID-设备子ID”表示</td>
+</tr>
+<tr>
+<td style="text-align:left">line_base_boardcount</td>
+<td style="text-align:left">array</td>
+<td style="text-align:left">每条产线的基板总数</td>
+</tr>
+<tr>
+<td style="text-align:left">boardcount</td>
+<td style="text-align:left">int</td>
+<td style="text-align:left">电路总数</td>
+</tr>
+<tr>
+<td style="text-align:left">gateway_boardcount</td>
+<td style="text-align:left">array</td>
+<td style="text-align:left">每个网关的电路总数</td>
+</tr>
+<tr>
+<td style="text-align:left">task_boardcount</td>
+<td style="text-align:left">array</td>
+<td style="text-align:left">每个任务的电路总数</td>
+</tr>
+<tr>
+<td style="text-align:left">line_boardcount</td>
+<td style="text-align:left">array</td>
+<td style="text-align:left">每条产线的电路总数</td>
+</tr>
+<tr>
+<td style="text-align:left">is_abnormal_detected</td>
+<td style="text-align:left">array</td>
+<td style="text-align:left">每条产线的数据统计是否可能有异常</td>
+</tr>
+<tr>
+<td style="text-align:left">runtime</td>
+<td style="text-align:left">int</td>
+<td style="text-align:left">接口处理时间</td>
+</tr>
+<tr>
+<td style="text-align:left">ErrorCode</td>
+<td style="text-align:left">int</td>
+<td style="text-align:left">结果状态。0：正常；1：错误。</td>
+</tr>
+<tr>
+<td style="text-align:left">ErrorMsg</td>
+<td style="text-align:left">string</td>
+<td style="text-align:left">结果信息</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+<h5 id="-">接口示例</h5>
+<blockquote>
+<p>地址：
+<a href="http://shop.zuoduoduo.cn/api/smtreport/get_smt_count/start_time/1545408000/end_time/1545444649">http://shop.zuoduoduo.cn/api/smtreport/get_smt_count/start_time/1545408000/end_time/1545444649</a></p>
+<p>返回：
+{<br/>
+  &quot;smt_count&quot;:177513,<br/>
+  &quot;gateway_smt_count&quot;:{&quot;zdd-2018112204&quot;:0,&quot;zdd-2018112205&quot;:15598,&quot;zdd-2018112206&quot;:19200,&quot;zdd-2018112207&quot;:28578,&quot;zdd-2018112208&quot;:99590},<br/>
+  &quot;task_smt_count&quot;:[{&quot;id&quot;:393,&quot;name&quot;:&quot;D:\PRG\\u534e\u5efa\u5b89-\u7ea2\u677f\\u7ea2\u677f20DV2-MB-V3.4(\u5355\u5361+\u786c\u76d8+\u53cc\u5361)-BOT(4-4).E48&quot;,&quot;count&quot;:24447},{&quot;id&quot;:401,&quot;name&quot;:&quot;D:\PRG\\u534e\u5efa\u5b89-\u7ea2\u677f\\u7ea2\u677f20DV2-MB-V3.4(\u5355\u5361+\u786c\u76d8+\u53cc\u5361)-TOP(4-3).E48&quot;,&quot;count&quot;:11473}],<br/>
+  &quot;base_boardcount&quot;:1320,<br/>
+  &quot;gateway_base_boardcount&quot;:{&quot;zdd-2018112207&quot;:440,&quot;zdd-2018112205&quot;:716,&quot;zdd-2018112210&quot;:0,&quot;zdd-2018112204&quot;:0},<br/>
+  &quot;task_base_boardcount&quot;:[{&quot;id&quot;:388,&quot;name&quot;:&quot;D:\PRG\\u534e\u5efa\u5b89-\u7ea2\u677f\\u7ea2\u677f20DV2-MB-V3.4(\u5355\u5361+\u786c\u76d8+\u53cc\u5361)-BOT(4-2).x11&quot;,&quot;count&quot;:255},{&quot;id&quot;:405,&quot;name&quot;:&quot;D:\PRG\\u534e\u5efa\u5b89-\u7ea2\u677f\\u7ea2\u677f20DV2-MB-V3.4(\u5355\u5361+\u786c\u76d8+\u53cc\u5361)-TOP(4-2).x11&quot;,&quot;count&quot;:48}],<br/>
+  &quot;line_base_boardcount&quot;:&quot;\u4ea7\u7ebf2&quot;:115,&quot;\u4ea7\u7ebf3&quot;:55,&quot;\u4ea7\u7ebf1&quot;:88},<br/>
+  &quot;boardcount&quot;:4842,<br/>
+  &quot;gateway_boardcount&quot;:[{&quot;id&quot;:388,&quot;name&quot;:&quot;D:\PRG\\u534e\u5efa\u5b89-\u7ea2\u677f\\u7ea2\u677f20DV2-MB-V3.4(\u5355\u5361+\u786c\u76d8+\u53cc\u5361)-BOT(4-2).x11&quot;,&quot;count&quot;:1006},{&quot;id&quot;:405,&quot;name&quot;:&quot;D:\PRG\\u534e\u5efa\u5b89-\u7ea2\u677f\\u7ea2\u677f20DV2-MB-V3.4(\u5355\u5361+\u786c\u76d8+\u53cc\u5361)-TOP(4-2).x11&quot;,&quot;count&quot;:192}],<br/>
+  &quot;task_boardcount&quot;:{&quot;279&quot;:0,&quot;293&quot;:200,&quot;295&quot;:912,&quot;290&quot;:866,&quot;8&quot;:928,&quot;285&quot;:736,&quot;296&quot;:1200},<br/>
+  &quot;line_boardcount&quot;:{&quot;\u4ea7\u7ebf2&quot;:690,&quot;\u4ea7\u7ebf3&quot;:55,&quot;\u4ea7\u7ebf1&quot;:1408},<br/>
+  &quot;is_abnormal_detected&quot;:{&quot;\u4ea7\u7ebf2&quot;:false,&quot;\u4ea7\u7ebf3&quot;:false,&quot;\u4ea7\u7ebf1&quot;:false},<br/>
+  &quot;runtime&quot;:5007,<br/>
+  &quot;ErrorCode&quot;:0,<br/>
+  &quot;ErrorMsg&quot;:&quot;OK&quot;<br/>
+}
+<br/><br/></p>
+</blockquote>
+<p><strong>5. 获得生产图表数据</strong></p>
+<h5 id="-">接口功能</h5>
+<blockquote>
+<p>获取当前用户在给定时间段内的图表数据，同时可以用给定的条件进行灵活的查询：网关ID、设备子ID、任务ID</p>
+</blockquote>
+<h5 id="url">URL</h5>
+<blockquote>
+<p><a href="http://shop.zuoduoduo.cn/api/smtreport/get_smt_histogram">http://shop.zuoduoduo.cn/api/smtreport/get_smt_histogram</a></p>
+</blockquote>
+<h5 id="-">支持格式</h5>
+<blockquote>
+<p>URL</p>
+</blockquote>
+<h5 id="http-">HTTP请求方式</h5>
+<blockquote>
+<p>GET</p>
+</blockquote>
+<h5 id="-">请求参数</h5>
+<blockquote>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">参数</th>
+<th style="text-align:left">必选</th>
+<th style="text-align:left">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">start_time</td>
+<td style="text-align:left">true</td>
+<td style="text-align:left">int</td>
+<td>查询的开始时间点</td>
+</tr>
+<tr>
+<td style="text-align:left">end_time</td>
+<td style="text-align:left">true</td>
+<td style="text-align:left">int</td>
+<td>查询的结束时间点</td>
+</tr>
+<tr>
+<td style="text-align:left">gateway_id</td>
+<td style="text-align:left">false</td>
+<td style="text-align:left">string</td>
+<td>网关ID，若为空则查询所有网关</td>
+</tr>
+<tr>
+<td style="text-align:left">device_sub_id</td>
+<td style="text-align:left">false</td>
+<td style="text-align:left">int</td>
+<td>设备子ID，若为空则查询网关下的所有设备. 如果gateway_id为空, 则该参数会被忽略</td>
+</tr>
+<tr>
+<td style="text-align:left">task_id</td>
+<td style="text-align:left">false</td>
+<td style="text-align:left">int</td>
+<td>任务ID，若gateway_id和device_sub_id都为空，则该参数会被忽略</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+<h5 id="-">返回字段</h5>
+<blockquote>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">返回字段</th>
+<th style="text-align:left">字段类型</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">smt_data</td>
+<td style="text-align:left">array</td>
+<td style="text-align:left">每个任务的数据列表</td>
+</tr>
+<tr>
+<td style="text-align:left">runtime</td>
+<td style="text-align:left">int</td>
+<td style="text-align:left">接口处理时间</td>
+</tr>
+<tr>
+<td style="text-align:left">ErrorCode</td>
+<td style="text-align:left">int</td>
+<td style="text-align:left">结果状态。0：正常；1：错误。</td>
+</tr>
+<tr>
+<td style="text-align:left">ErrorMsg</td>
+<td style="text-align:left">string</td>
+<td style="text-align:left">结果信息</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+<h5 id="-">接口示例</h5>
+<blockquote>
+<p>地址：
+<a href="http://shop.zuoduoduo.cn/api/smtreport/get_smt_histogram/start_time/1545235200/end_time/1545290573">http://shop.zuoduoduo.cn/api/smtreport/get_smt_histogram/start_time/1545235200/end_time/1545290573</a></p>
+<p>返回：
+{<br/>
+  &quot;smt_data&quot;:[{&quot;gateway_id&quot;:&quot;zdd-2018112206&quot;,&quot;device_sub_id&quot;:1,&quot;task_id&quot;:258,&quot;task_name&quot;:&quot;D:\Prg\HRWL\HRWL-M330-V1.7(2-1).s01x&quot;,&quot;data&quot;:[[1545235228,73]]},{&quot;gateway_id&quot;:&quot;zdd-2018112207&quot;,&quot;device_sub_id&quot;:1,&quot;task_id&quot;:233,&quot;task_name&quot;:&quot;D:\PRG\\u5de5\u63a7\u677f\HD V03(\u666e\u901a\u7248)-TOP( 4--2).x11&quot;,&quot;data&quot;:[[1545235261,6576]]}],<br/>
+  &quot;runtime&quot;:3483,<br/>
+  &quot;ErrorCode&quot;:0,<br/>
+  &quot;ErrorMsg&quot;:&quot;OK&quot;<br/>
+}
+<br/><br/></p>
+</blockquote>
+<p><strong>6. 获得每条产线的有效运行时间</strong></p>
+<h5 id="-">接口功能</h5>
+<blockquote>
+<p>获取用户每条产线的有效运行时间</p>
+</blockquote>
+<h5 id="url">URL</h5>
+<blockquote>
+<p><a href="http://shop.zuoduoduo.cn/api/smtreport/get_effective_time">http://shop.zuoduoduo.cn/api/smtreport/get_effective_time</a></p>
+</blockquote>
+<h5 id="-">支持格式</h5>
+<blockquote>
+<p>URL</p>
+</blockquote>
+<h5 id="http-">HTTP请求方式</h5>
+<blockquote>
+<p>GET</p>
+</blockquote>
+<h5 id="-">请求参数</h5>
+<blockquote>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">参数</th>
+<th style="text-align:left">必选</th>
+<th style="text-align:left">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">start_time</td>
+<td style="text-align:left">true</td>
+<td style="text-align:left">int</td>
+<td>查询的开始时间点</td>
+</tr>
+<tr>
+<td style="text-align:left">end_time</td>
+<td style="text-align:left">true</td>
+<td style="text-align:left">int</td>
+<td>查询的结束时间点</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+<h5 id="-">返回字段</h5>
+<blockquote>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">返回字段</th>
+<th style="text-align:left">字段类型</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">effective_time</td>
+<td style="text-align:left">array</td>
+<td style="text-align:left">每条产线的有效运行时间</td>
+</tr>
+<tr>
+<td style="text-align:left">runtime</td>
+<td style="text-align:left">int</td>
+<td style="text-align:left">接口处理时间</td>
+</tr>
+<tr>
+<td style="text-align:left">ErrorCode</td>
+<td style="text-align:left">int</td>
+<td style="text-align:left">结果状态。0：正常；1：错误。</td>
+</tr>
+<tr>
+<td style="text-align:left">ErrorMsg</td>
+<td style="text-align:left">string</td>
+<td style="text-align:left">结果信息</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+<h5 id="-">接口示例</h5>
+<blockquote>
+<p>地址：
+<a href="http://shop.zuoduoduo.cn/api/smtreport/get_effective_time/start_time/1545235200/end_time/1545298951">http://shop.zuoduoduo.cn/api/smtreport/get_effective_time/start_time/1545235200/end_time/1545298951</a></p>
+<p>返回：
+{<br/>
+  &quot;effective_time&quot;:[{&quot;line_name&quot;:&quot;\u4ea7\u7ebf1&quot;,&quot;effective_time&quot;:17931},{&quot;line_name&quot;:&quot;\u4ea7\u7ebf2&quot;,&quot;effective_time&quot;:22503},{&quot;line_name&quot;:&quot;\u4ea7\u7ebf3&quot;,&quot;effective_time&quot;:34106}],<br/>
+  &quot;runtime&quot;:1717,<br/>
+  &quot;ErrorCode&quot;:0,<br/>
+  &quot;ErrorMsg&quot;:&quot;OK&quot;<br/>
+}
+<br/><br/></p>
+</blockquote>
+</body></html>

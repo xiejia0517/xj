@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <title></title>
+
+    <link rel="stylesheet" href="/zdd/mui/css/mui.min.css">
+    <link rel="stylesheet" href="/zdd/ui/weui/v1.1.3/weui.min.css">
+    <link rel="stylesheet" href="/zdd/iconfont/iconfont.css?v=1.1">
+    <link rel="stylesheet" href="/zdd/images/zdd.css">
+    <link rel="stylesheet" href="/zdd/images/zdd_group.css">
+    <script type="text/javascript" src="/zdd/ui/jquery/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript" src="/zdd/mui/js/mui.min.js"></script>
+    <script type="text/javascript" src="/zdd/js/common.js?v=1.1"></script>
+    <link rel="stylesheet" href="/static/plugins/js/jquery-ui/jquery-ui.min.css">
+    <script src="/static/plugins/js/jquery-ui/jquery-ui.min.js"></script>
+    <script src="/static/plugins/layer/layer.js"></script>
+    <script type="text/javascript" charset="utf-8">
+        mui.init();
+    </script>
+    <style>
+        .mui-table-view{padding-top:40px;}
+
+    </style>
+</head>
+<body>
+    <header class="mui-bar mui-bar-nav">
+        <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+        <h1 class="mui-title">设备管理</h1>
+        <a class="mui-icon mui-icon-bars mui-pull-right"></a>
+    </header>
+    <form action="" method="POST">
+        <ul class="mui-table-view">
+            <li class="mui-table-view-cell">ID: {$devices_detail.bid}</li>
+            <li class="mui-table-view-cell">网关: {$devices_detail.gateway_id}</li>
+            <li class="mui-table-view-cell">别名: {$devices_detail.model_name}</li>
+            <li class="mui-table-view-cell">设备ID: {$devices_detail.sub_id}</li>
+            <li class="mui-table-view-cell">状态: {$devices_detail.online_status}</li>
+            <li class="mui-table-view-cell">设备子版本号: {$devices_detail.f_dsub_version}</li>
+            <li class="mui-table-view-cell">CPU ID: {$devices_detail.f_dcpuid}</li>
+            <li class="mui-table-view-cell">
+                <div class="mui-input-row mui-select">
+                    <label>设备所属分组:</label>
+                    <select name="f_group_name" id="f_group_name">
+                        <option value="{$devices_detail.group_name}">{$devices_detail.group_name}</option>
+                        {foreach name="$group_name" item="v"}
+                        <option value="{$v}" {if $v === $devices_detail.group_name}selected{/if}>{if $v > 0}&nbsp&nbsp{/if}{$v}</option>
+                        {/foreach}
+                    </select>
+                </div>
+            </li>
+
+            <li class="mui-table-view-cell">
+                <div class="mui-input-row ">
+                    <label>设备排序:</label>
+                    <input type="text" id="f_sort" placeholder="请输入设备排序" class="mui-input-clear" name="f_sort" value="{$devices_detail.f_sort}">
+                </div>
+            </li>
+        </ul>
+
+        <div class="mui-button-row">
+            <button type="button" id="but_add_group" class="mui-btn mui-btn-primary" >{$Think.lang.save_edit}</button>
+        </div>
+
+    </form>
+
+    <script>
+        $("#but_add_group").click(function(){
+            var group_name=$('#f_group_name').val();
+            var f_sort=$('#f_sort').val();
+            var bid='{$devices_detail.bid}';
+            $.ajax({
+                type: 'POST',
+                url: "{:url('Template/groupEdit')}",
+                cache: false,
+                data: {"f_group_name":group_name,'bid':bid,'f_sort':f_sort},
+                dataType: 'json',
+                success: function (data) {
+                    if (data.code == '1') {
+                        // layer.alert(data.message);
+                        layer.msg(data.message,{time: 20000});
+                        window.location.href="{:url('Template/group_list')}";
+                    }else{
+                        layer.alert(data.message);
+                    }
+                    return false;
+                },
+                error: function () {
+                    layer.alert("修改分组失败");
+                },
+            });
+
+        });
+
+    </script>
+</body>
+</html>

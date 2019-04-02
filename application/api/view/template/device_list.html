@@ -1,0 +1,297 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-touch-fullscreen" content="yes" />
+<meta name="format-detection" content="telephone=no"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="msapplication-tap-highlight" content="no" />
+<meta name="viewport" content="initial-scale=1,maximum-scale=1,minimum-scale=1" />
+<title></title>
+	<link rel="stylesheet" href="/zdd/mui/css/mui.min.css">
+	<link rel="stylesheet" href="/zdd/ui/weui/v1.1.3/weui.min.css">
+	<link rel="stylesheet" href="/zdd/ui/jquery-weui/v1.2.1/jquery-weui.min.css">
+	<link rel="stylesheet" href="/zdd/iconfont/iconfont.css?v=1.1">
+	<link rel="stylesheet" href="/zdd/images/zdd.css">
+	<link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css">
+	<script type="text/javascript" src="/zdd/ui/jquery/jquery-1.12.4.min.js"></script>
+	<script type="text/javascript" src="/zdd/ui/jquery-weui/v1.2.1/jquery-weui.min.js"></script>
+	<script type="text/javascript" src="/zdd/mui/js/mui.min.js"></script>
+	<script type="text/javascript" src="/zdd/ui/vue/v2.5.17/vue.min.js"></script>
+	<script type="text/javascript" src="/zdd/js/common.js?v=1.1"></script>
+<style type="text/css">
+* { touch-action: pan-y; }
+[v-cloak] { display:none !important;}
+body{ background: #fff; font-size: 12px;}
+.padding_10{ padding: 10px; }
+	.device_tab{
+		width: 100%;
+		height: 35px;
+		display: flex;
+		background: #fafafa;
+	}
+	.device_tab > a.item{
+		flex: 1;
+		text-align: center;
+		color: #ccc;
+		border-bottom: 1px solid #ddd;
+		padding: 10px 0 10px 0;
+	}
+	.device_tab > a.item.active{
+		color: #333;
+		border-bottom-width: 3px;
+	}
+	#DeviceList .iconfont{ color: #00b7ee;}
+	#DeviceList .offline{
+		-webkit-filter: grayscale(1); /* Webkit */
+		filter: gray; /* IE6-9 */
+		-moz-opacity:0.5;
+		opacity: 0.5;
+	}
+
+
+	/*分组*/
+.contact-ul{margin-top:10px;font-size:14px;width:80%}
+.contact-ul>.contact-li{
+	text-align: left;
+	border-bottom: 1px solid #E0E0E0;
+	padding:10px;
+}
+.contact-ul>.contact-li:hover{
+	cursor:pointer;
+}
+.contact-ul>.contact-li:last-child{border-bottom:0px;}
+.contact-ul>.contact-li>.contact-content{
+    position:fixed;
+    width:80%;
+	display: none;
+}
+.fa {
+    float:left;
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.fa-box{width:80%;overflow-y:auto;position:absolute;bottom:60px;top:50px;}
+.fa-box-item{
+	width:80%;
+	padding-left:10px;
+	padding-top:5px;
+	padding-bottom:5px;
+	background:white;
+	border-bottom:1px solid rgba(160,160,160,.3);
+	overflow:hidden;white-space:nowrap;text-overflow:ellipsis;
+}
+.fa-box-item:hover{
+	cursor:pointer;
+}
+.fa-box-item:last-child{border-bottom:0px;}
+.fa-box-item-left{width:40px;height:40px;float:left;background:pink;border-radius:50%;position:relative;}
+.fa-box-item-right{height:40px;max-width:65%;float:left;padding-left:3px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;}
+.fa-color-red{color:rgba(200,0,0,.8);}
+.fa-angle-down:before {
+    width:18px;
+    content: "\f107";
+}
+.fa-angle-up:before {
+    content: "\f106";
+}
+.fa-box-item img{float:left;height:60px;width:60px;vertical-align: top;}
+.contact-group{text-align:center;width:100%;background-color:#1CA2E1}
+.group_class{
+    font-size: 18px;;font-weight: bold;}
+
+</style>
+</head>
+
+<body>
+	<header class="mui-bar mui-bar-nav">
+		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		<h1 class="mui-title">设备管理</h1>
+		<a class="mui-icon mui-icon-bars mui-pull-right"></a>
+	</header>
+	<div style="height: 50px;background: #fafafa;"></div>
+	<div id="VueApp">
+		<div class="device_tab">
+			<a href="javascript:void(0);" class="item" :class="Tab.active==0?'active':''" v-on:click="set_active(0)">设备列表</a>
+			<a href="javascript:void(0);" class="item" :class="Tab.active==1?'active':''" v-on:click="set_active(1)">网关管理</a>
+			<a href="javascript:void(0);" class="item" :class="Tab.active==2?'active':''" v-on:click="set_active(2)">任务列表</a>
+			<a href="{:url('Template/group_list')}" class="item" :class="Tab.active==3?'active':''" >分组管理</a>
+		</div>
+		<div class="weui-panel weui-panel_access" style="margin-top:0">
+			<div class="weui-panel__bd" v-if="Tab.active==0" id="DeviceList">
+				<template v-for="todo in DeviceList">
+					<a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg" v-bind:class="todo.online_status=='1'?'online':'offline'" v-on:click="goto_view_device">
+						<div class="weui-media-box__hd">
+							<img class="weui-media-box__thumb" src="/zdd/images/photo/device_default.png">
+						</div>
+						<div class="weui-media-box__bd">
+							<h4 class="weui-media-box__title">{{ todo.model_name }}</h4>
+							<p class="weui-media-box__desc">网关ID：{{ todo.gateway_id }} 编号：{{ todo.sub_id }}</p>
+						</div>
+						<div class="" style="">
+							<span class="iconfont icon-jiantouyou-fill"></span>
+						</div>
+					</a>
+				</template>
+			</div>
+			<div class="weui-panel__bd" v-if="Tab.active==1">
+				<template v-for="todo in GatewayList">
+					<a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg" v-bind:class="todo.online_status=='1'?'online':'offline'" v-on:click="goto_view_device">
+						<div class="weui-media-box__hd">
+							<img class="weui-media-box__thumb" src="/zdd/images/photo/device_default.png">
+						</div>
+						<div class="weui-media-box__bd">
+							<h4 class="weui-media-box__title">{{ todo.model_name }}</h4>
+							<p class="weui-media-box__desc">网关ID：{{ todo.gateway_id }} 编号：{{ todo.sub_id }}</p>
+						</div>
+						<div class="" style="width: 20px;">
+							<span class="iconfont icon-jiantouyou-fill"></span>
+						</div>
+					</a>
+				</template>
+			</div>
+
+			<!--分组管理-->
+			<div class="weui-panel__bd" v-if="Tab.active==3" >
+				<!--<buttom class="item" :class="Tab.active==31?'active':''" v-on:click="set_active(31)">创建分组</buttom>-->
+
+
+					<template class="contact-ul" id="contact-ul"  v-for="todo in DeviceList">
+						<div class="contact-li" id="contact-li">
+							<div class="contact-group" id="contact-group">
+                                <!--<i class="fa fa-angle-down fa-3x" style="float:left;"></i>-->
+                                <i class="fa fa-plus-square " aria-hidden="true"></i>
+                                <span class="group_class">{{todo.teamname}}</span>
+                            </div>
+							<div class="contact-content">
+								<div class="fa-box-item">
+									<img class="weui-media-box__thumb" src="/zdd/images/photo/device_default.png">
+									<div class="fa-box-item-right">
+                                        {{ todo.model_name }} <br>
+                                        网关ID：{{ todo.gateway_id }} 编号：{{ todo.sub_id }}
+                                    </div>
+								</div>
+							</div>
+						</div>
+					</template>
+
+
+
+			</div>
+
+
+
+		</div>
+	</div>
+
+<script>
+// var SERVICE_URL = "https://shop.zuoduoduo.cn";
+var SERVICE_URL = "http://www.shop.com";
+var DATA = {
+	Tab: {
+		active: 0
+	},
+	DeviceList: [],
+	GatewayList: [],
+	TaskList: []
+};
+var PAGE = {
+	init: function(){
+		var me = this;
+		var VueApp = new Vue({
+			el: '#VueApp',
+			data: DATA,
+			methods: {
+				set_active: function (i) {
+					this.Tab.active = i;
+					if(typeof me["getdata_"+i]=="function") me["getdata_"+i]();
+				},
+				goto_view_device: function (e) {
+					console.log(e);
+				}
+			}
+		});
+		this.getdata_0();
+	},
+	getdata_0: function(){
+		console.log(111);
+		var me = this;
+		$.ajax({
+			url: SERVICE_URL + "/api/smtreport/get_devices",
+			data: {},
+			type: "GET",
+			dataType: "json",
+			success: function(data){
+				if(data["ErrorCode"]==0){
+					DATA.DeviceList = data.device_list;
+				}
+			}
+		});
+	},
+	getdata_1: function(){
+		console.log(222);return;
+		var me = this;
+		$.ajax({
+			url: SERVICE_URL + "/api/smtreport/get_devices",
+			data: {},
+			type: "GET",
+			dataType: "json",
+			success: function(data){
+				if(data["ErrorCode"]==0){
+					DATA.DeviceList = data.device_list;
+				}
+			}
+		});
+	}
+};
+$(function(){
+	PAGE.init();
+});
+
+
+
+</script>
+
+    <script>
+        $(function(){
+
+            //分组
+            // $("#contact-ul>.contact-li>.contact-group").click(function(){
+            $("#contact-group").click(function(){
+                alert(1);
+                if($(this).find("i").hasClass("fa-plus-square")){
+                    /**设置当前选中图标**/
+                    $(this).find("i").removeClass("fa-plus-square");
+                    $(this).find("i").addClass("fa-minus-square");
+                    /**样式1：只关注当前项**/
+                    $(this).nextAll().slideDown();
+                    /**样式2：设置显示当前内容，其他组内容隐藏，未选中图标**/
+                    //$(this).nextAll().slideDown().end().parent().siblings().children(".contact-content").hide();
+                    //$(this).parent().siblings().children("div").children("i").removeClass("fa-angle-up").addClass("fa-angle-down");
+                }else{
+                    /**设置当前取消选中图标**/
+                    $(this).find("i").removeClass("fa-minus-square");
+                    $(this).find("i").addClass("fa-plus-square");
+                    /**样式1：只关注当前项**/
+                    $(this).nextAll().slideUp();
+                    /**样式2：设置所有内容隐藏，未选中图标**/
+                    //$(this).nextAll().slideUp().end().parent().siblings().children(".contact-content").hide();
+                    //$(this).parent().siblings().children("div").children("i").removeClass("fa-angle-up").addClass("fa-angle-down");;
+                }
+            });
+        });
+
+        (function($) {
+            $.init();
+        })(mui);
+    </script>
+
+</body>
+</html>

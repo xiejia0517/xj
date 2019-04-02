@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-touch-fullscreen" content="yes" />
+	<meta name="format-detection" content="telephone=no"/>
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+	<meta name="format-detection" content="telephone=no" />
+	<meta name="msapplication-tap-highlight" content="no" />
+	<meta name="viewport" content="initial-scale=1,maximum-scale=1,minimum-scale=1" />
+	<script type="text/javascript" src="/zdd/ui/jquery/jquery-1.12.4.min.js"></script>
+	<title></title>
+	<script type="text/javascript">
+		$(function(){
+			var t = setInterval(function(){
+				$.ajax({
+					url:"www.baidu.com" // 测试接口
+				});
+			}, 3*1000);
+			$("#close").click(function(){
+				clearInterval(t);
+			});
+		});
+	</script>
+</head>
+<body>
+	<button id="close">关闭定时器</button>
+</body>
+</html>
+
