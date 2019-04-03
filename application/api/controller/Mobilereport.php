@@ -1629,9 +1629,19 @@ class Mobilereport extends Controller
      */
     public function doTest()
     {
-        $str = "index.php/api/mobilereport/doTest";
+        // $str = "index.php/api/mobilereport/doTest";
+        $arr = [
+            ["name" =>'aaa',"desc"=>'asdfsadfsdfsfsa'],
+            ["name" =>'aaa',"desc"=>'asdfsadfsdfsfsa'],
+            ["name" =>'aaa',"desc"=>'asdfsadfsdfsfsa'],
+            ["name" =>'aaa',"desc"=>'asdfsadfsdfsfsa'],
+            ["name" =>'aaa',"desc"=>'asdfsadfsdfsfsa'],
+            ["name" =>'aaa',"desc"=>'asdfsadfsdfsfsa'],
+            ["name" =>'aaa',"desc"=>'asdfsadfsdfsfsa'],
+            ["name" =>'aaa',"desc"=>'asdfsadfsdfsfsa'],
+        ];
         api_return([
-            'c_id' => 1,
+            'order' => $arr,
         ], 0, "OK");
         // return json_encode($str);
     }

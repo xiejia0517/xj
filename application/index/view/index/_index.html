@@ -14,8 +14,8 @@
 </head>
 <body>
     <div id="box">
-        <h3>{{msg}}</h3>
-        <input type="text" v-model="msg">
+        <h3>{{order}}</h3>
+        <input type="text" v-model="order">
         <button @click="fn">click me</button>
         <hr>
         <ul>
@@ -32,7 +32,7 @@
         el:'#box',
         data() {
             return {
-                msg:"aa",
+                order:"",
                 bol : true,
                 arr:[
                     {desc:'aaaaa',bol:false},
@@ -46,7 +46,7 @@
         },
         methods: {
             fn:function(){
-                console.log('fn' + this.msg);
+                console.log('fn' + this.order);
                 $.ajax({
                     type: "POST",
                     url: "/index.php/api/mobilereport/doTest",
@@ -55,8 +55,8 @@
                     success: function (res) {
                         console.log(res);
                         console.log('a');
-                        console.log('ajax' + this.msg);
-                        app.msg = res;
+                        // console.log('ajax' + this.order);
+                        app.order = res.order;
                     }
                 });
             },

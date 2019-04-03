@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>ECharts</title>
+    <style>
+        .con{
+            width: 1142px;
+            height: 382px;
+            background: #ccc;
+            margin: 30px auto;
+            overflow: hidden;
+            position: relative;
+        }
+        .cusor{
+            position: absolute;
+            left: 50%;
+        }
+        .cusor span{
+            width: 30px;height: 15px;
+        }
+        ul{
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            position: absolute;
+        }
+
+        ul li{
+            width: 280px;
+            height: 382px;
+            float: left;
+        }
+        img{
+            width: 280px;
+            height: 382px;
+        }
+        #left{width: 50px;}
+        #right{width: 50px;}
+    </style>
+</head>
+<body>
+    
+        <div id="box" class="con" @click="fn">
+            <ul id="silder_ul" :style="{width:order.length *280 + 'px'}">
+                <li v-for="(item, index) in order" :key="index"><img src="http://pic75.nipic.com/file/20150821/9448607_145742365000_2.jpg" alt=""></li>
+            </ul>
+        </div>
+        <div class="cusor"><button id="left">&#9668</button><button id="right">&#9658</button></div>
+</body>
+</html>
+<!-- 引入 echarts.js -->
+<script src="/js/jquery-1.12.4.min.js"></script>
+<script src="/vue/vue.min.js"></script>
+<script>
+   var app = new Vue({
+        el:'#box',
+        data() {
+            return {
+                order:"",
+                bol : true,
+                arr:[],
+            }
+        },
+        methods: {
+            fn:function(){
+                console.log('fn' + this.order);
+                $.ajax({
+                    type: "POST",
+                    url: "/index.php/api/mobilereport/doTest",
+                    data: "",
+                    dataType: "json",
+                    success: function (res) {
+                        console.log(res);
+                        console.log('a');
+                        // console.log('ajax' + this.order);
+                        app.order = res.order;
+                    }
+                });
+            },
+            cc:function(index){
+                for (var i =0 ; i < this.arr.length; i++) {
+                    this.arr[i].bol = false;
+                }
+                this.arr[index].bol = true;
+            }
+        },
+    });
+
+    $(function(){
+        // var left = parseInt( $("#silder_ul").css( "left" ) );
+        // console.log(left);
+        $("#left").click(function (e) { 
+            var left = parseInt( $("#silder_ul").css( "left" ) );
+
+            $("#silder_ul").animate({ "left" : (left - 200) + "px" });
+        });
+        $("#right").click(function (e) { 
+            var left = parseInt( $("#silder_ul").css( "left" ) );
+            $("#silder_ul").animate({ "left" : (left + 200) + "px" });
+        }); 
+    });
+</script>

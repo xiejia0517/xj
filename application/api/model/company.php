@@ -45,6 +45,7 @@ class Company extends Model
             'c_id' => $companyres['c_id'],
             'c_name' => $companyres['c_name'],
             'c_ads' => $companyres['c_ads'],
+            'c_pic' => $companyres['c_pic'],
         ];
         return $companyres_part;
     }

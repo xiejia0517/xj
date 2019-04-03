@@ -66,4 +66,58 @@ class Pmcreport extends Base
             api_return([], 1, "不是ajax请求");
         }
     }
+    /**
+     * 我的-公司列表-注册和关注的-加标识
+     * api/pmcreport/PmcGetCompanyAllList
+     */
+    public function PmcGetCompanyAllList()
+    {
+        // $session_get = (Session::get('pmc_member_id'));
+        
+        //测试数据
+        $session_get = 16;
+        
+        //判断Session
+        if(isset($session_get))
+        {
+            //公司数据数组
+            $regiest_company_arr = array();
+            $unregiest_company_arr = array();
+            // $session_get = (Session::get('member_id'));
+
+            //测试数据
+            $session_get = 16;
+
+            $mem_model = new MemberModel();
+            $com_model = new CompanyModel();
+            $res_isregiest = $mem_model->getRelationIsRegiest($session_get,1);//传1表示查询注册的
+            $res_unregiest = $mem_model->getRelationIsRegiest($session_get,0);//传0表示查询注册的
+            // dump($res);die;
+            foreach ($res_isregiest as $key => $value) {
+                $com_single_info = $com_model -> getCompanySimpleres($value['company_id']);
+                // dump($com_single_info);
+                $role_arr = explode("|",$value['role']);
+                $com_single_info['role'] = $role_arr;
+                $regiest_company_arr[] = $com_single_info;
+                
+            }
+            foreach ($res_unregiest as $key => $value) {
+                $com_single_info = $com_model -> getCompanySimpleres($value['company_id']);
+                // dump($com_single_info);
+                $role_arr = explode("|",$value['role']);
+                $com_single_info['role'] = $role_arr;
+                $unregiest_company_arr[] = $com_single_info;
+                
+            }
+            // dump($company_arr);die;
+            api_return([
+                "regiest_company_list"   => $regiest_company_arr,
+                "follow_company_list"   => $unregiest_company_arr,
+            ], 0, "OK");
+        }
+        else
+        {
+            api_return([], 1, "未登陆(Session不存在)");
+        }
+    }
 }

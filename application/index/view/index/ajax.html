@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>ECharts</title>
+</head>
+<body>
+    <div id="box">
+        {{msg}}
+    </div>
+</body>
+</html>
+<!-- 引入 echarts.js -->
+<script src="/js/jquery-1.12.4.min.js"></script>
+<script src="/vue/vue.min.js"></script>
+<script>
+    $(function(){
+        Page.init();
+    });
+    var Page = {
+        init : function(){
+            var vue = new Vue({
+            el:"#box",
+            data() {
+                return {
+                    msg:[1]
+                }
+            },
+            beforeCreate() {
+                $.ajax({
+                        type: "POST",
+                        url: "/api/pmcreport/PmcGetCompanyAllList",
+                        data: "",
+                        dataType: "json",
+                        success: function (res) {
+                            console.log('成功');
+                            vue.msg = res;
+                        }
+                    });
+            },
+            methods: {
+                getInfo:function(){
+                    
+                }
+            },
+        })
+        }
+    }
+    
+</script>
