@@ -9,6 +9,7 @@ class Index extends Controller
     public function index()
     {
         // return view('ajax');
-        return view();
+        return view('lunbo');
+        // return view();
     }
 }
