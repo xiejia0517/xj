@@ -47,4 +47,17 @@ class Pmc_order extends Model
         $res = Db('pmc_work_order') -> where('order_id',$order_id) ->select();
         return $res;
     }
+    /**
+     * 订单-工单-group建立联系
+     */
+    public function workOrderToGroupRelation($order_id,$wo_number,$group_id)
+    {
+        $map['order_id'] = $order_id;
+        $map['wo_number'] = $wo_number;
+        $data = [
+            'group_id' => $group_id
+        ];
+        $res = Db('pmc_work_order') -> where($map) -> update($data);
+        return $res ; //$res是update操作影响的行数
+    }
 }

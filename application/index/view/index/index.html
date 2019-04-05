@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <title>ECharts</title>
     <style>
+        [v-clock] {display: none}
         #box{
             width: 350px;
             margin: 30px auto;
@@ -32,7 +33,7 @@
     </style>
 </head>
 <body>
-    <div id="box">
+    <div id="box" v-cloak>
         <h2>任务列表 : </h2>
         <p>任务总数 : {{arr.length}}; 还有 : {{choose()}} 未完成 【 <span class="done" @click="fn">完成</span> 】</p>
         <ul>
@@ -40,12 +41,20 @@
                 <span @click="edit(index)" v-show="!item.edit">{{ item.desc }}</span><input v-show="item.edit" type="text" v-model="item.desc" @blur="item.edit=false"></li>
         </ul>
         <input type="text" name="" id="" class="add" v-model="msg"><button @click="add(msg)">添加</button>
+        <h3>{{msg|tf}}</h3>
+        <button @click="htp">$http测试</button>
+
+
+
     </div>
 </body>
 </html>
 <!-- 引入 echarts.js -->
 <script src="/js/jquery-1.12.4.min.js"></script>
 <script src="/vue/vue.min.js"></script>
+<script src="/vue/vue-resource.min.js"></script>
+<!-- <script src="../../vue/vue.min.js"></script> -->
+
 <script>
     var v = new Vue({
         el:"#box",
@@ -57,7 +66,12 @@
                     {desc:'C',bol:false,edit:false},
                     {desc:'Python',bol:false,edit:false}
                 ],
-                msg:'',
+                msg:'Xavier',
+            }
+        },
+        filters: {
+            tf: function(value) {
+                return 'value ->' + value;
             }
         },
         methods: {
@@ -92,6 +106,24 @@
                 {
                     this.arr[index].edit = true;
                 }
+            },
+            htp:function(){
+
+                this.$http.get('/file/file.txt').then(
+                    function(res){console.log('成功');console.log(res)},
+                    function(res){console.log('失败')}
+                );
+
+                // $.ajax({
+                //     type: "get",
+                //     url: "/file/file.txt",
+                //     data: "data",
+                //     dataType: "json",
+                //     success: function (res) {
+                //         console.log('成功');
+                //         console.log(res);
+                //     }
+                // });
             }
         },
     })
