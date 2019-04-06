@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>ECharts</title>
+    <style>
+        [v-clock] {display: none}
+        #box{
+            width: 350px;
+            margin: 30px auto;
+            background: #eee;
+            padding: 15px;
+        }
+        ul{
+            list-style: none;
+            padding-left: 0;
+        }
+        .add{
+            width: 200px;
+            height: 20px;
+            margin-right: 10px;
+        }
+        .done{
+            color: skyblue;
+        }
+        .finish{
+            color: #ccc;
+            text-decoration: line-through;
+        }
+        .done:hover{
+            cursor:pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="box" v-cloak>
+        <h2>任务列表 : </h2>
+        <p>任务总数 : {{arr.length}}; 还有 : {{choose()}} 未完成 【 <span class="done" @click="fn">完成</span> 】</p>
+        <ul>
+            <li :class="{finish:item.bol}" v-for="(item, index) in arr" :key="index"><input type="checkbox" name="" id=""  v-model="item.bol">
+                <span @click="edit(index)" v-show="!item.edit">{{ item.desc }}</span><input v-show="item.edit" type="text" v-model="item.desc" @blur="item.edit=false"></li>
+        </ul>
+        <input type="text" name="" id="" class="add" v-model="msg"><button @click="add(msg)">添加</button>
+        <h3>{{msg|tf}}</h3>
+        <button @click="htp">$http测试</button>
+
+
+
+    </div>
+</body>
+</html>
+<!-- 引入 echarts.js -->
+<script src="/js/jquery-1.12.4.min.js"></script>
+<script src="/vue/vue.min.js"></script>
+<script src="/vue/vue-resource.min.js"></script>
+<!-- <script src="../../vue/vue.min.js"></script> -->
+
+<script>
+    Vue.filter('tf', function(val){
+        return 'Vue.filter ->' + val;
+    })
+
+    var v = new Vue({
+        el:"#box",
+        data() {
+            return {
+                arr:[
+                    {desc:'JAVA',bol:false,edit:false},
+                    {desc:'PHP',bol:false,edit:false},
+                    {desc:'C',bol:false,edit:false},
+                    {desc:'Python',bol:false,edit:false}
+                ],
+                msg:'Xavier',
+            }
+        },
+        // filters: {
+        //     tf: function(value) {
+        //         return 'value ->' + value;
+        //     }
+        // },
+        mounted () {
+            console.log('beforeCreate --------->');
+            console.log('el :' + this.$el);
+            console.log('data :' + this.$data);
+        },
+        methods: {
+            add:function(e){
+                var _arr ={desc:e,bol:false,edit:false};
+                this.arr.push(_arr);
+                this.msg = '';
+            },
+            choose:function(){
+                var count = 0;
+                for(var i =0;i<this.arr.length;i++)
+                {
+                    if(this.arr[i].bol == false)
+                    {
+                        count++;
+                    }
+                }
+                return count;
+            },
+            fn:function(){
+                var temp = this.arr;
+                this.arr = [];
+                temp.forEach(function(item){
+                    if(item.bol == false)
+                    {
+                        v.arr.push({desc:item.desc,bol:item.bol,edit:item.edit});
+                    }
+                })
+            },
+            edit:function(index){
+                if(this.arr[index].bol == false)
+                {
+                    this.arr[index].edit = true;
+                }
+            },
+            htp:function(){
+
+                this.$http.get('/file/file.txt').then(
+                    function(res){console.log('成功');console.log(res)},
+                    function(res){console.log('失败')}
+                );
+
+                // $.ajax({
+                //     type: "get",
+                //     url: "/file/file.txt",
+                //     data: "data",
+                //     dataType: "json",
+                //     success: function (res) {
+                //         console.log('成功');
+                //         console.log(res);
+                //     }
+                // });
+            }
+        },
+    })
+</script>
