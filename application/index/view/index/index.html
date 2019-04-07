@@ -10,7 +10,8 @@
 </head>
 <body>
     <div id="box" v-cloak>
-        <button @click="search()">显示评论</button>
+        <button @click="search($event)">search($event)</button>
+        <input type="text" @keydown.up="fn($event)">
         <ul>
             <li></li>
         </ul>
@@ -34,16 +35,27 @@
              }
          },
          methods: {
-            search:function(){
-                $.ajax({
-                    type: "get",
-                    url: "http://api.artgoer.cn:8084/artgoer/api/v1/user/324380/v3/topic/topicHomeByLaber?pageIndex=1&token=b544cd63-6d42-46fe-a96c-3c96bae3113&topicId=62187",
-                    data: "data",
-                    dataType: "json",
-                    success: function (res) {
-                        console.log(res);
-                    }
-                });
+             fn:function(e){
+                 console.log(e.keyCode);
+             },
+            search:function(res){
+                var data = [{word:'a'}];
+
+                console.log(res);
+                // $.ajax({
+                //     type: "get",
+                //     url: "https://sug.so.360.cn/suggest?word="+'a',
+                //     contentType:"application/jsonp; charset=utf-8",
+                //     data: data,
+                //     dataType: "jsonp",
+                //     success: function (res) {
+                //         console.log(res);
+                //     }
+                // });
+
+                
+                // this.$http.jsonp('https://sug.so.360.cn/suggest',{params:{word:'a'}}).then(function(res){console.log(res.data.s)});
+                
             }
          }
      })
