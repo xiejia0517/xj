@@ -1631,14 +1631,14 @@ class Mobilereport extends Controller
     {
         // $str = "index.php/api/mobilereport/doTest";
         $arr = [
-            ["name" =>'aaa',"desc"=>'asdfsadfsdfsfsa'],
-            ["name" =>'aaa',"desc"=>'asdfsadfsdfsfsa'],
-            ["name" =>'aaa',"desc"=>'asdfsadfsdfsfsa'],
-            ["name" =>'aaa',"desc"=>'asdfsadfsdfsfsa'],
-            ["name" =>'aaa',"desc"=>'asdfsadfsdfsfsa'],
-            ["name" =>'aaa',"desc"=>'asdfsadfsdfsfsa'],
-            ["name" =>'aaa',"desc"=>'asdfsadfsdfsfsa'],
-            ["name" =>'aaa',"desc"=>'asdfsadfsdfsfsa'],
+            ["name" =>'aaa',"desc"=>'aaaaaaaaaaaaaaaaaa'],
+            ["name" =>'aaa',"desc"=>'it技术-ajax返回中文,页面显示成问号'],
+            ["name" =>'aaa',"desc"=>'前端ajax接收后台传回jso'],
+            ["name" =>'aaa',"desc"=>'用ajax传递json,返回前台的中文乱码问题 '],
+            ["name" =>'aaa',"desc"=>'解决ajax调用controller返回'],
+            ["name" =>'aaa',"desc"=>'AJAX后台往前台传值中文'],
+            ["name" =>'aaa',"desc"=>'用ajax传递json到前台中文出'],
+            ["name" =>'aaa',"desc"=>'ajax返回值乱码-'],
         ];
         api_return([
             'order' => $arr,

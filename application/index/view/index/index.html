@@ -5,15 +5,15 @@
     <title>ECharts</title>
     <style>
         [v-clock] {display: none}
-        
+        .gray{background: #ccc;}
     </style>
 </head>
 <body>
     <div id="box" v-cloak>
+        <input type="text" v-model="wd">
         <button @click="search($event)">search($event)</button>
-        <input type="text" @keydown.up="fn($event)">
         <ul>
-            <li></li>
+            <li :class="{gray: index == nowIndex }" v-for="(item,index) in arr">{{ item.desc }}</li>
         </ul>
 
 
@@ -31,7 +31,9 @@
          el:'#box',
          data () {
              return {
-                 
+                 wd:'',
+                 arr:[],
+                 nowIndex:0,
              }
          },
          methods: {
@@ -41,20 +43,24 @@
             search:function(res){
                 var data = [{word:'a'}];
 
-                console.log(res);
-                // $.ajax({
-                //     type: "get",
-                //     url: "https://sug.so.360.cn/suggest?word="+'a',
-                //     contentType:"application/jsonp; charset=utf-8",
-                //     data: data,
-                //     dataType: "jsonp",
-                //     success: function (res) {
-                //         console.log(res);
-                //     }
-                // });
+                //console.log(res);
+                
+                 $.ajax({
+                     type: "get",
+                     url: "/api/mobilereport/doTest",
+                     data: data,
+                     dataType: "json",
+                     success: function (res) {
+                         console.log(res);
+                         vm.arr = res.order;
+                     }
+                 });
 
                 
-                // this.$http.jsonp('https://sug.so.360.cn/suggest',{params:{word:'a'}}).then(function(res){console.log(res.data.s)});
+                //this.$http.jsonp('https://sug.so.360.cn/suggest',{params:{word:'a'}}).then(function(res){
+                //    console.log(res.body.s);
+                //    vm.arr = res.body.s;
+                //});
                 
             }
          }
