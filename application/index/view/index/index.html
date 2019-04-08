@@ -13,11 +13,12 @@
         <input type="text" v-model="wd">
         <button @click="search($event)">search($event)</button>
         <ul>
-            <li :class="{gray: index == nowIndex }" v-for="(item,index) in arr">{{ item.desc }}</li>
+            <li :class="{gray: index == nowIndex }" v-for="(item,index) in arr" @click="select(index)">{{ item.desc }}</li>
         </ul>
 
-
     </div>
+    <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=3&id=2057099324&auto=1&height=66"></iframe>
+
 </body>
 </html>
 <!-- 引入 echarts.js -->
@@ -37,9 +38,12 @@
              }
          },
          methods: {
-             fn:function(e){
-                 console.log(e.keyCode);
-             },
+            fn:function(e){
+                console.log(e.keyCode);
+            },
+            select:function(index){
+                vm.nowIndex = index;
+            }, 
             search:function(res){
                 var data = [{word:'a'}];
 
