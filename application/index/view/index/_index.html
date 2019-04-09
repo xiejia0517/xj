@@ -15,12 +15,31 @@
 <body>
     <div id="box">
         <h3>{{order}}</h3>
+        <hr>
+            <table>
+                <thead>
+                    <tr>
+                        <th>订单名</th>
+                        <th>编号</th>
+                        <th>index</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(item, index) in order" :key="index">
+                        <th>{{item.name}}</th>
+                        <th>{{item.desc}}</th>
+                        <th>{{item.name}}</th>
+                    </tr>
+                </tbody>
+            </table>
+        <hr>
         <input type="text" v-model="order">
         <button @click="fn">click me</button>
         <hr>
         <ul>
             <li :class='{red:item.bol}' v-for="(item, index) in arr" :key="index" @click="cc(index)" >{{item}}</li>
         </ul>
+        <button @click="add">test</button>
     </div>
 </body>
 </html>
@@ -32,7 +51,7 @@
         el:'#box',
         data() {
             return {
-                order:"",
+                order:[],
                 bol : true,
                 arr:[
                     {desc:'aaaaa',bol:false},
@@ -45,6 +64,12 @@
             }
         },
         methods: {
+            add:function()
+            {
+                var ordera =  {'name':'第二次添加','desc':'aaaaaaa'}
+                ;   
+                app.order.push(ordera);
+            },
             fn:function(){
                 console.log('fn' + this.order);
                 $.ajax({

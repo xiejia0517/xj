@@ -10,6 +10,7 @@ class Index extends Controller
     {
         // return view('ajax');
         // return view('lunbo');
-        return view();
+        return view('_index');
+        // return view();
     }
 }
