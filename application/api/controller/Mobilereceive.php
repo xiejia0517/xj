@@ -385,17 +385,6 @@ class Mobilereceive extends Controller
      */
     public function postMobilereceive()
     {
-        $role_list = array();
-        $map = [
-            'member_id' => 16,
-            'company_id' =>1,
-        ]; 
-        $res = Db('member_relationship') ->where($map) ->find();
-        $role = explode("|",$res['role']);
-        $role_list = $role;
-        api_return([
-            "company_list"   => 'aaa',
-            "role_list" => $role_list,
-        ], 0, "OK");
+        var_dump(request.getInputStream());
     }
 }
