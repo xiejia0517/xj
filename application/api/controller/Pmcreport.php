@@ -33,7 +33,7 @@ class Pmcreport extends Base
             $company_id = input('c_id');
             
             $pmc_order_model = new PmcOrderModel();
-            $insert_order_id = $pmc_order_model -> insertOrderInfo();
+            // $insert_order_id = $pmc_order_model -> insertOrderInfo();
 
 
             // api_return([
