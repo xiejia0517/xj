@@ -10,13 +10,27 @@
 </head>
 <body>
     <div id="box" v-cloak>
-        <input type="text" v-model="wd" @keydown.up="up()" @keydown.down="down()">
+        <input type="text" v-model="wd" @keydown.up.prevent="up()" @keydown.down.prevent="down()">
         <button @click="search($event)">search($event)</button>
         <ul>
             <li :class="{gray: index == nowIndex }" v-for="(item,index) in arr" @click="select(index)">{{ item.desc }}</li>
         </ul>
 
+        <test></test>
+        <button @contextmenu.prevent="mouseR()">ceshi</button>
     </div>
+
+    <template id="template-1">
+        <div>
+            <h3>template-1</h3>
+            <ul>
+                <li>{{ msg }}</li>
+                <li>{{ msg }}</li>
+                <li>{{ msg }}</li>
+            </ul>
+        </div>
+    </template>
+
     <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=3&id=2057099324&auto=1&height=66"></iframe>
 </body>
 </html>
@@ -27,61 +41,79 @@
 <!-- <script src="../../vue/vue.min.js"></script> -->
 
 <script>
-     var vm = new Vue({
-         el:'#box',
-         data () {
-             return {
-                 wd:'',
-                 arr:[],
-                 nowIndex:0,
-             }
-         },
-         methods: {
-            up:function(){
-                this.nowIndex ++;
-                if(this.nowIndex>=this.arr.length)
-                {
-                    this.nowIndex = 0;
+    Vue.component('test', {
+            template:"#template-1",
+            data () {
+                return {
+                    msg:'template-msg'
                 }
-                console.log(this.nowIndex);
-            },
-            down:function(){
-                this.nowIndex --;
-                if(this.nowIndex<0)
-                {
-                    this.nowIndex = this.arr.length-1;
-                }
-                console.log(this.nowIndex);
-            },
-            fn:function(e){
-                console.log(e.keyCode);
-            },
-            select:function(index){
-                vm.nowIndex = index;
-            }, 
-            search:function(res){
-                var data = [{word:'a'}];
-
-                //console.log(res);
-                
-                 $.ajax({
-                     type: "get",
-                     url: "/api/mobilereport/doTest",
-                     data: data,
-                     dataType: "json",
-                     success: function (res) {
-                         console.log(res);
-                         vm.arr = res.order;
-                     }
-                 });
-
-                
-                //this.$http.jsonp('https://sug.so.360.cn/suggest',{params:{word:'a'}}).then(function(res){
-                //    console.log(res.body.s);
-                //    vm.arr = res.body.s;
-                //});
-                
             }
+        });
+    
+     var page = {
+         data:'',
+         init:function(){
+                var vm = new Vue({
+                el:'#box',
+                data () {
+                    return {
+                        wd:'',
+                        arr:[],
+                        nowIndex:0,
+                    }
+                },
+                methods: {
+                    mouseR:function(){
+                        console.log('mouseR');
+                    },
+                    up:function(){
+                        this.nowIndex ++;
+                        if(this.nowIndex>=this.arr.length)
+                        {
+                            this.nowIndex = 0;
+                        }
+                        console.log(this.nowIndex);
+                    },
+                    down:function(){
+                        this.nowIndex --;
+                        if(this.nowIndex<0)
+                        {
+                            this.nowIndex = this.arr.length-1;
+                        }
+                        console.log(this.nowIndex);
+                    },
+                    fn:function(e){
+                        console.log(e.keyCode);
+                    },
+                    select:function(index){
+                        vm.nowIndex = index;
+                    }, 
+                    search:function(res){
+                        var data = [{word:'a'}];
+
+                        //console.log(res);
+                        
+                        $.ajax({
+                            type: "get",
+                            url: "/api/mobilereport/doTest",
+                            data: data,
+                            dataType: "json",
+                            success: function (res) {
+                                console.log(res);
+                                vm.arr = res.order;
+                            }
+                        });
+
+                        
+                        //this.$http.jsonp('https://sug.so.360.cn/suggest',{params:{word:'a'}}).then(function(res){
+                        //    console.log(res.body.s);
+                        //    vm.arr = res.body.s;
+                        //});
+                        
+                    }
+                }
+            })
          }
-     })
+     }
+     $(function(){page.init()});
 </script>
