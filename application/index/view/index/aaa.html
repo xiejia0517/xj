@@ -1,0 +1,131 @@
+<br><!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>��ȡ�����λ�ã������ӵ�</title>
+        <script type="text/javascript" src="js/jquery-1.12.4.min.js"></script>
+        <style>
+        *{margin:0 ;padding:0;}
+        .svgcontainer,.container{position:absolute;top:50%;left:50%;margin-left:-400px;margin-top:-250px;width:800px;height:500px;}
+        .container{border:1px solid #ccc;cursor: pointer;}
+        .dot{width:10px;height:10px;border-radius:50%;position:absolute;background:#0078B6;margin-top:-5px;margin-left:-5px;}
+        .initdot{top:0;left:0;}
+        </style>
+    </head>
+    <body>
+        <div class="svgcontainer" id="svgcontainer"></div>
+        <div class="container" id="container">
+            <div class="dot initdot"></div>
+        </div>
+        <button id="test">测试</button>
+    </body>
+</html>
+<script>
+    var container=document.getElementById("container");
+    var svgcontainer=document.getElementById("svgcontainer");
+    //����svg ע����̬����svg ie8�����²�֧�ָ÷���
+    var svgns="http://www.w3.org/2000/svg";
+    var svger=document.createElementNS(svgns,"svg");
+    svger.setAttribute("width",container.clientWidth);
+    svger.setAttribute("height",container.clientHeight);
+    svger.setAttribute("viewBox","0 0 "+container.clientWidth+" "+container.clientHeight);
+    svgcontainer.appendChild(svger);
+     
+    container.onclick=function(e){
+        var e=e||window.event;//�¼�����
+        //��ȡ��������λ��
+        var mousePosition=mousePos(e);
+        //������
+        creatdot(mousePosition.x,mousePosition.y);
+        //���ӵ�
+        var dots=container.children;
+        linedot(dots[dots.length-2],dots[dots.length-1]);
+    }
+     
+    //λ������ ��ֵ��
+    function intpixel(str){
+        return str.substring(0,str.length-2)*1;
+    }
+     
+    $(function(){
+        $("#test").click(function()
+        {
+            draw(this.svgcontainer);
+        });
+    });
+    var myimg=document.getElementById("test");
+    myimg.click = function()
+    {
+        alert(1);
+    };
+    function draw(img) {
+        var imageData = getImagePixelData(img);
+        var triangloid = new Triangloid({
+            cellsize: cellsize
+        });
+        var trianglifiedImage = triangloid.trianglifyImage(imageData, img.width, img.height);
+        svg = trianglifiedImage.getSVG();
+        dropZone.style.background = 'url(' + svg + ') no-repeat center';
+        dropZone.style.backgroundSize = backgroundSize;
+    }
+
+    //��ȡ�������
+    function mousePos(e){
+        if(e.pageX){
+            //IE9������֧��pageX���� ����ĵ�
+            return {x:e.pageX,y:e.pageY}
+        }else{
+            return {x:e.clientX+document.body.scrollLeft-document.body.clientLeft,
+                    y:e.clientY+document.body.scrollTop-document.body.clientTop}
+        }
+    }
+    //������
+    function creatdot(posX,posY){
+        //���container����
+        var newposX=posX-container.offsetLeft;
+        var newposY=posY-container.offsetTop;
+        var dot=document.createElement("div");
+        dot.setAttribute("class","dot");
+        //��λ
+        dot.style.left=newposX+"px";
+        dot.style.top=newposY+"px";
+        container.appendChild(dot);
+    }
+    //���ӵ�
+    function linedot(dot1,dot2){
+        //clearTimeout(timepath);
+        var start={x:intpixel(dot1.style.left),y:intpixel(dot1.style.top)};
+        var end={x:intpixel(dot2.style.left),y:intpixel(dot2.style.top)};
+        var current={x:start.x,y:start.y};
+        //����ֱ��
+        var line=document.createElementNS(svgns,"line");
+        line.setAttribute("x1",dot1.style.left);
+        line.setAttribute("y1",dot1.style.top);
+        line.setAttribute("x2",dot1.style.left);
+        line.setAttribute("y2",dot1.style.top);
+        line.setAttribute("stroke","red");
+        line.setAttribute("fill","none");
+        svger.appendChild(line);
+        //�Ƕ�
+        var tangle={
+                        sin:(end.y-start.y)/Math.sqrt((end.y-start.y)*(end.y-start.y)+(end.x-start.x)*(end.x-start.x)),
+                        cos:(end.x-start.x)/Math.sqrt((end.y-start.y)*(end.y-start.y)+(end.x-start.x)*(end.x-start.x))
+                        };
+        //����
+        var step=function(){
+            //����ÿ֡�ƶ�λ�ƴ�СΪ10
+            if(Math.abs(current.x-end.x)<10&&Math.abs(current.y-end.y)<10){
+                current.x=end.x;
+                current.y=end.y;
+            }else{
+                current.x+=10*tangle.cos;
+                current.y+=10*tangle.sin;
+                var timepath=setTimeout(step,17);//������ػ��ٶ�Ϊ60֡ÿ��
+            }
+            line.setAttribute("x2",current.x+"px");
+            line.setAttribute("y2",current.y+"px");
+        }
+        step();
+    }
+     
+</script>
