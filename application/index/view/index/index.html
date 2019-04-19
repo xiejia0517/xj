@@ -17,9 +17,10 @@
         </ul>
 
         <test></test>
+        <inner></inner>
         <button @contextmenu.prevent="mouseR()">ceshi</button>
     </div>
-
+    <!-- 全局组件 -->
     <template id="template-1">
         <div>
             <h3>template-1</h3>
@@ -27,6 +28,17 @@
                 <li>{{ msg }}</li>
                 <li>{{ msg }}</li>
                 <li>{{ msg }}</li>
+            </ul>
+        </div>
+    </template>
+    <!-- 局部组件 -->
+    <template id="template-inner">
+        <div>
+            <h3>局部组件</h3>
+            <ul>
+                <li>inner components</li>
+                <li>inner components</li>
+                <li>inner components</li>
             </ul>
         </div>
     </template>
@@ -41,6 +53,7 @@
 <!-- <script src="../../vue/vue.min.js"></script> -->
 
 <script>
+    
     Vue.component('test', {
             template:"#template-1",
             data () {
@@ -60,6 +73,11 @@
                         wd:'',
                         arr:[],
                         nowIndex:0,
+                    }
+                },
+                components:{
+                    'inner':{
+                        template:'#template-inner'
                     }
                 },
                 methods: {
