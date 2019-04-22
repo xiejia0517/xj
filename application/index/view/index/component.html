@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>ECharts</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+    <style>
+        [v-clock] {display: none}
+        .gray{background: #ccc;}
+        .searchWrap{position: relative;background: rgb(193, 236, 243);width: 100%;height: 50px;}
+        .searchinput{position: absolute;border-radius: 3px;width: 80%;height: 30px;border:none;top: 10px;left: 5px;text-indent: 2em;}
+        img{position: absolute;width: 20px;height: 20px;top: 15px;left: 10px;}
+    </style>
+</head>
+<body>
+    
+    <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=3&id=2057099324&auto=1&height=66"></iframe>
+    <div id="box" v-cloak>
+        <input type="text" v-model="wd" @keydown.up.prevent="up()" @keydown.down.prevent="down()">
+        <button @click="search($event)">search($event)</button>
+        <ul>
+            <li :class="{gray: index == nowIndex }" v-for="(item,index) in arr" @click="select(index)">{{ item.desc }}</li>
+        </ul>
+
+        <test></test>
+        <inner></inner>
+        <search></search>
+
+        <button @contextmenu.prevent="mouseR()">ceshi</button>     
+    </div>
+    <!-- 全局组件 -->
+    <template id="template-1">
+        <div>
+            <h3>template-1</h3>
+            <ul>
+                <li>{{ msg }}</li>
+                <li>{{ msg }}</li>
+                <li>{{ msg }}</li>
+            </ul>
+        </div>
+    </template>
+    <!-- 局部组件 -->
+    <template id="template-inner">
+        <div>
+            <h3>局部组件</h3>
+            <ul>
+                <li>{{ msg }}</li>
+                <li>inner components</li>
+                <li>inner components</li>
+            </ul>
+        </div>
+    </template>
+
+    <template id="search">
+        <div class="searchWrap">
+            <input class="searchinput" type="text" :placeholder="placeholder">
+            <img src="/static/icon/search.png" alt="" @click="search()">
+        </div>
+    </template>
+
+</body>
+</html>
+<!-- 引入 echarts.js -->
+<script src="/js/jquery-1.12.4.min.js"></script>
+<script src="/vue/vue.min.js"></script>
+<script src="/vue/vue-resource.min.js"></script>
+<!-- <script src="../../vue/vue.min.js"></script> -->
+
+<script>
+    
+    Vue.component('test', {
+            template:"#template-1",
+            data () {
+                return {
+                    msg:'template-msg'
+                }
+            }
+        });
+    
+     var page = {
+         data:'',
+         init:function(){
+                var vm = new Vue({
+                el:'#box',
+                data () {
+                    return {
+                        wd:'',
+                        arr:[],
+                        nowIndex:0,
+                    }
+                },
+                components:{
+                    'inner':{
+                        template:'#template-inner',
+                        data () {
+                            return {
+                                msg:'inner msg'
+                            }
+                        }
+                    },
+                    'search':{
+                        template:'#search',
+                        data () {
+                            return {
+                                placeholder:'请输入搜索关键字'
+                            }
+                        },
+                        methods: {
+                            search:function(){
+                                this.placeholder = '搜索中.....';
+                            }
+                        },
+                    },
+                },
+                methods: {
+                    mouseR:function(){
+                        console.log('mouseR');
+                    },
+                    up:function(){
+                        this.nowIndex ++;
+                        if(this.nowIndex>=this.arr.length)
+                        {
+                            this.nowIndex = 0;
+                        }
+                        console.log(this.nowIndex);
+                    },
+                    down:function(){
+                        this.nowIndex --;
+                        if(this.nowIndex<0)
+                        {
+                            this.nowIndex = this.arr.length-1;
+                        }
+                        console.log(this.nowIndex);
+                    },
+                    fn:function(e){
+                        console.log(e.keyCode);
+                    },
+                    select:function(index){
+                        vm.nowIndex = index;
+                    }, 
+                    search:function(res){
+                        var data = [{word:'a'}];
+
+                        //console.log(res);
+                        
+                        $.ajax({
+                            type: "get",
+                            url: "/api/mobilereport/doTest",
+                            data: data,
+                            dataType: "json",
+                            success: function (res) {
+                                console.log(res);
+                                vm.arr = res.order;
+                            }
+                        });
+
+                        
+                        //this.$http.jsonp('https://sug.so.360.cn/suggest',{params:{word:'a'}}).then(function(res){
+                        //    console.log(res.body.s);
+                        //    vm.arr = res.body.s;
+                        //});
+                        
+                    }
+                }
+            })
+         }
+     }
+     $(function(){page.init()});
+</script>
