@@ -16,18 +16,24 @@
         /* 初始化 */
         [v-clock] {display: none}
         iframe{width: 90%;}
-        .headerWrap{width: 100%;height: 50px;background: #f7f7f7;border-bottom: 1px solid #999;text-align: center;line-height: 50px;}
+        .headerWrap{width: 100%;height: 50px;background: #f7f7f7;border-bottom: 1px solid #999;text-align: center;line-height: 50px;position: relative;}
+        .headerWrap img{width: 20px;height: 20px;position: absolute;}
+        .headerWrap .leftImg{top: 15px;right: 25px;}
+        .headerWrap .rightImg{top: 15px;right: 50px;}
     </style>
 </head>
 <body>
     <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=3&id=2057099324&auto=1&height=66"></iframe>
     <div id="box">
-        <my-header></my-header>
+        <my-header txt='新闻' srcL="/static/icon/eye.png" srcR="/static/icon/search.png"></my-header>
+        <!-- <my-header txt='广告'></my-header> -->
     </div>
     <!-- 组件 -->
     <template id="head">
         <div class="headerWrap">
-            <span>Mac Component-Xavier</span>
+            <span>{{txt}}</span>
+            <img :src="srcL" class="leftImg">
+            <img :src="srcR" class="rightImg">
         </div>
     </template>
 </body>
@@ -52,7 +58,13 @@
                 },
                 components:{
                     'myHeader':{
-                        template:"#head"
+                        template:"#head",
+                        props:["txt","srcL","srcR"],
+                        data () {
+                            return {
+                                srcT:"/static/icon/eye.png"
+                            }
+                        }
                     }
                 }
             })
