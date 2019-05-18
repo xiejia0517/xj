@@ -25,13 +25,13 @@
 <body>
     <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=3&id=2057099324&auto=1&height=66"></iframe>
     <div id="box">
-        <my-header txt='新闻' srcL="/static/icon/eye.png" srcR="/static/icon/search.png"></my-header>
+        <my-header txt='新闻' src-L="/static/icon/eye.png" src-R="/static/icon/search.png"></my-header>
         <!-- <my-header txt='广告'></my-header> -->
     </div>
     <!-- 组件 -->
     <template id="head">
         <div class="headerWrap">
-            <span>{{txt}}</span>
+            <span>{{txt}}{{srcL}}</span>
             <img :src="srcL" class="leftImg">
             <img :src="srcR" class="rightImg">
         </div>
