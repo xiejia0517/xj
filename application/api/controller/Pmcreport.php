@@ -120,4 +120,14 @@ class Pmcreport extends Base
             api_return([], 1, "未登陆(Session不存在)");
         }
     }
+    /**
+     * 测试python接口
+     * api/Pmcreport/pythonCheck
+     */
+    public function pythonCheck()
+    {
+        api_return([
+            'msg' => 'python post is worked!'
+        ],0,'ok');
+    }
 }

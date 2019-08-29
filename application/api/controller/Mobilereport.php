@@ -22,6 +22,19 @@ class Mobilereport extends Controller
         echo("<h2>这个开发人员是个逗比!</h2>");
         echo("<h2>他没有写这个方法</h2>");
     }
+
+    /**
+     * api/mobilereport/vueTest
+     */
+    public function vueTest()
+    {
+        $return_str = 'api is ok !';
+        api_return([
+            'api_return' => $return_str
+        ],0,'ok');
+    }
+
+
     /**
      * 获取关注某一company的全部用户信息以及角色配置信息
      * api/mobilereport/getAllFollowMember

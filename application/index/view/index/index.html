@@ -28,47 +28,23 @@
         <my-header txt='新闻' src-L="/static/icon/eye.png" src-R="/static/icon/search.png"></my-header>
         <!-- <my-header txt='广告'></my-header> -->
     </div>
+    <div class="fi"><input id="file" type="file" onchange="changepic(this)" name='upload_file'></div>
+    <div class="bu"><button>提交</button></div>
+    <div><img id="show" src="" alt=""></div>
+
+
+
     <!-- 组件 -->
     <template id="head">
-        <div class="headerWrap">
-            <span>{{txt}}{{srcL}}</span>
-            <img :src="srcL" class="leftImg">
-            <img :src="srcR" class="rightImg">
+        <div class="headerWrap">;
+            <span>component</span>
         </div>
     </template>
 </body>
 </html>
 <!-- 引入 echarts.js -->
 <script src="/js/jquery-1.12.4.min.js"></script>
+<script src="/js/xavier.js"></script>
 <script src="/vue/vue.min.js"></script>
 <script src="/vue/vue-resource.min.js"></script>
 <!-- <script src="../../vue/vue.min.js"></script> -->
-
-<script>
-    
-     var page = {
-         data:'',
-         init:function(){
-            var vm = new Vue({
-                el:"#box",
-                data () {
-                    return {
-                        
-                    }
-                },
-                components:{
-                    'myHeader':{
-                        template:"#head",
-                        props:["txt","srcL","srcR"],
-                        data () {
-                            return {
-                                srcT:"/static/icon/eye.png"
-                            }
-                        }
-                    }
-                }
-            })
-         }
-     }
-     $(function(){page.init()});
-</script>
