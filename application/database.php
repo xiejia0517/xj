@@ -5,15 +5,35 @@ return [
 'type'           => 'mysql',
 // 服务器地址
 //git用
-'hostname'       => 'shop.zuoduoduo.cn',
+// 'hostname'       => 'shop.zuoduoduo.cn',
+// // 数据库名
+// 'database'       => 'shop_zuoduoduo_cn',
+// // 用户名
+// 'username'       => 'root',
+// // 密码
+// 'password'       => 'DK900@GBX6W', //DK900@GBX6W
+
+
+
+'hostname'       => '127.0.0.1',
 // 数据库名
 'database'       => 'shop_zuoduoduo_cn',
 // 用户名
 'username'       => 'root',
 // 密码
-'password'       => 'DK900@GBX6W', //DK900@GBX6W
+'password'       => 'root',
+
+
+
+
+
+
+
+
 // 端口
 'hostport'       => '3306',
+
+
 // 连接dsn
 'dsn'            => '',
 // 数据库连接参数

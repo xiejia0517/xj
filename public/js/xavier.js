@@ -26,6 +26,7 @@ var page = {
 $(document).ready(function () {
 
     page.init();
+    // outTest();///调用另外一个被同一个html引用的js的方法
 
     $('.bu').click(function (e) { 
         alert(tanchu);
