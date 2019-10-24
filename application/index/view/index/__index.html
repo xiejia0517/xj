@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>ECharts</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+    <style>
+        /* 初始化 */
+        body,ul,ol,li,p,h1,h2,h3,h4,h5,h6,form,fieldset,table,td,img,div{margin:0;padding:0;border:0;} 
+        body{background:#fff;color:#333;font-size:12px; margin-top:5px;font-family:"SimSun","宋体","Arial Narrow";} 
+        ul,ol{list-style-type:none;} 
+        select,input,img,select{vertical-align:middle;} 
+        a{text-decoration:none;} 
+        a:link{color:#009;} 
+        a:visited{color:#800080;} 
+        /* 初始化 */
+        [v-clock] {display: none}
+        iframe{width: 90%;}
+        .headerWrap{width: 100%;height: 50px;background: #f7f7f7;border-bottom: 1px solid #999;text-align: center;line-height: 50px;position: relative;}
+        .headerWrap img{width: 20px;height: 20px;position: absolute;}
+        .headerWrap .leftImg{top: 15px;right: 25px;}
+        .headerWrap .rightImg{top: 15px;right: 50px;}
+    </style>
+</head>
+<body>
+    <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=3&id=2057099324&auto=1&height=66"></iframe>
+    <div id="box">
+        <my-header txt='新闻' src-L="/static/icon/eye.png" src-R="/static/icon/search.png"></my-header>
+        <!-- <my-header txt='广告'></my-header> -->
+    </div>
+    <div class="fi"><input id="file" type="file" onchange="changepic(this)" name='upload_file'></div>
+    <div class="bu"><button>提交</button></div>
+    <div><img id="show" src="" alt=""></div>
+
+
+
+    <!-- 组件 -->
+    <template id="head">
+        <div class="headerWrap">;
+            <span>component</span>
+        </div>
+    </template>
+</body>
+</html>
+<!-- 引入 echarts.js -->
+<script src="/js/jquery-1.12.4.min.js"></script>
+<script src="/js/an.js"></script>
+<script src="/vue/vue.min.js"></script>
+<script src="/vue/vue-resource.min.js"></script>
+<!-- <script src="../../vue/vue.min.js"></script> -->
